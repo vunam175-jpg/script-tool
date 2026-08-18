@@ -1,456 +1,836 @@
-<html style="margin:0;padding:0;">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ScriptForge - Công cụ viết kịch bản & Storyboard miễn phí</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<script>
-(function(){
-  var s = document.createElement('style');
-  s.textContent = ':root{--bg:#202024;--card:#2a2a2f;--text:#e8e5df;--muted:#9a978f;--accent:#c47046;--accent-soft:rgba(196,112,70,.14);--accent2:#7ba8b8;--accent2-soft:rgba(123,168,184,.14);--border:rgba(232,229,223,.12)}.reveal{opacity:0;transform:translateY(20px);animation:fadeUp .6s ease forwards}.reveal:nth-child(2){animation-delay:.1s}.reveal:nth-child(3){animation-delay:.2s}.reveal:nth-child(4){animation-delay:.3s}@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}.tool-card{transition:all .25s ease}.tool-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(196,112,70,.15)}.tab-btn{transition:all .2s ease}.tab-btn.active{background:var(--accent-soft);color:var(--text);border-bottom:2px solid var(--accent)}.tab-content{display:none}.tab-content.active{display:block}.script-line{transition:background .15s ease}.script-line:hover{background:rgba(196,112,70,.06)}.shot-row{transition:background .15s ease}.shot-row:hover{background:rgba(123,168,184,.08)}input,textarea,select{background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:8px 12px;width:100%;font-size:13px;transition:border-color .15s}input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent)}textarea{resize:vertical;min-height:80px;line-height:1.6}label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;margin-bottom:4px;display:block}.btn-primary{background:var(--accent);color:var(--bg);border:none;padding:10px 20px;border-radius:8px;font-weight:600;cursor:pointer;transition:opacity .15s}.btn-primary:hover{opacity:.9}.btn-secondary{background:var(--card);color:var(--text);border:1px solid var(--border);padding:8px 16px;border-radius:8px;font-weight:500;cursor:pointer;transition:border-color .15s;font-size:13px}.btn-secondary:hover{border-color:var(--accent)}.btn-ghost{background:transparent;color:var(--muted);border:none;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;transition:color .15s}.btn-ghost:hover{color:var(--accent)}.pill{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600}.code-block{background:#1a1a1d;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:monospace;font-size:12px;color:var(--muted);overflow-x:auto;line-height:1.6}';
-  document.head.appendChild(s);
-})();
-</script>
-<div style="background-color:transparent;box-sizing:border-box;">
-  <div style="color:var(--text);font-family:'Sora',sans-serif;background:radial-gradient(1000px 500px at 80% -10%, var(--accent-soft), transparent 60%), var(--bg)">
-    <div class="max-w-6xl mx-auto px-6 py-12">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #202024;
+    --card: #2a2a2f;
+    --text: #e8e5df;
+    --muted: #9a978f;
+    --accent: #c47046;
+    --accent-soft: rgba(196, 112, 70, 0.14);
+    --accent2: #7ba8b8;
+    --accent2-soft: rgba(123, 168, 184, 0.14);
+    --border: rgba(232, 229, 223, 0.12);
+    --danger: #dc2626;
+    --success: #059669;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Sora', system-ui, sans-serif;
+    background: radial-gradient(1000px 500px at 20% -10%, var(--accent-soft), transparent 60%), var(--bg);
+    color: var(--text);
+    margin: 0;
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+  .app-container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+  
+  /* Header */
+  .app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+  }
+  .logo-icon {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bg);
+    font-weight: 800;
+  }
+  .header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  
+  /* Tabs */
+  .tab-nav {
+    display: flex;
+    gap: 2px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: 12px 20px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-radius: 8px 8px 0 0;
+  }
+  .tab-btn:hover { color: var(--text); background: var(--card); }
+  .tab-btn.active {
+    color: var(--text);
+    background: var(--accent-soft);
+    border-bottom-color: var(--accent);
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  
+  /* Cards & panels */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+  }
+  .grid-2 { display: grid; grid-template-columns: 320px 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+  
+  /* Form elements */
+  label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 6px;
+    margin-top: 12px;
+  }
+  label:first-child { margin-top: 0; }
+  input, textarea, select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 13px;
+    font-family: inherit;
+    transition: border-color 0.15s;
+  }
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+  
+  /* Buttons */
+  .btn {
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-primary { background: var(--accent); color: var(--bg); }
+  .btn-primary:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
+  .btn-secondary { background: var(--card); color: var(--text); border: 1px solid var(--border); }
+  .btn-secondary:hover:not(:disabled) { border-color: var(--accent); }
+  .btn-ghost { background: transparent; color: var(--muted); padding: 6px 10px; font-size: 12px; }
+  .btn-ghost:hover { color: var(--accent); }
+  .btn-danger { background: transparent; color: var(--danger); padding: 4px 8px; font-size: 12px; }
+  .btn-danger:hover { background: rgba(220, 38, 38, 0.1); }
+  .btn-ai {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: var(--bg);
+    width: 100%;
+    justify-content: center;
+    margin-top: 8px;
+  }
+  
+  /* Script display */
+  .script-display {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    min-height: 500px;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding: 20px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .script-line { padding: 4px 8px; border-radius: 4px; position: relative; transition: background 0.15s; }
+  .script-line:hover { background: var(--accent-soft); }
+  .script-line .delete-btn {
+    position: absolute; right: 4px; top: 2px;
+    opacity: 0; transition: opacity 0.15s;
+  }
+  .script-line:hover .delete-btn { opacity: 1; }
+  .scene-heading { font-weight: 700; text-transform: uppercase; margin: 16px 0 8px; color: var(--accent); }
+  .action { margin: 8px 0; color: var(--text); }
+  .character { text-align: center; text-transform: uppercase; margin: 12px 0 4px; font-weight: 600; }
+  .dialogue { margin: 0 80px; color: var(--text); }
+  .parenthetical { margin: 0 120px; color: var(--muted); font-style: italic; }
+  .transition { text-align: right; text-transform: uppercase; margin: 12px 0; color: var(--accent2); }
+  
+  /* Tables */
+  .table-container { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 700px; }
+  th {
+    text-align: left;
+    padding: 10px 8px;
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+  }
+  td {
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+  tr:hover td { background: rgba(123, 168, 184, 0.06); }
+  
+  /* Storyboard */
+  .storyboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+  .story-panel {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    transition: all 0.2s;
+  }
+  .story-panel:hover {
+    border-color: var(--accent2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(123, 168, 184, 0.12);
+  }
+  .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .panel-num {
+    background: var(--accent2-soft);
+    color: var(--accent2);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .panel-image {
+    aspect-ratio: 16/9;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .panel-image img { width: 100%; height: 100%; object-fit: cover; }
+  .panel-image-placeholder { color: var(--muted); font-size: 12px; text-align: center; padding: 20px; }
+  
+  /* Pills & badges */
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--accent-soft);
+    color: var(--text);
+  }
+  .pill-accent2 { background: var(--accent2-soft); color: var(--text); }
+  
+  /* Loading spinner */
+  .spinner {
+    display: inline-block;
+    width: 14px; height: 14px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  
+  /* API settings */
+  .api-settings {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 700px) { .api-settings { grid-template-columns: 1fr; } }
+  .api-input-wrapper { position: relative; }
+  .api-input-wrapper input { padding-right: 80px; font-family: monospace; font-size: 12px; }
+  .toggle-visibility {
+    position: absolute;
+    right: 8px; top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 12px;
+  }
+  
+  /* AI provider selector */
+  .provider-select {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .provider-btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    transition: all 0.15s;
+  }
+  .provider-btn.active {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--text);
+  }
+  
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+  
+  /* Toast notification */
+  .toast {
+    position: fixed;
+    bottom: 20px; right: 20px;
+    background: var(--card);
+    border: 1px solid var(--accent);
+    color: var(--text);
+    padding: 12px 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    animation: slideIn 0.3s ease;
+    font-size: 13px;
+  }
+  @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  
+  /* Section header */
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .section-title h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text);
+  }
+  .section-num {
+    font-family: monospace;
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+</style>
+</head>
+<body>
 
-      <!-- HERO -->
-      <div class="reveal mb-12">
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
-          <div style="width:44px;height:44px;border-radius:12px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+<div class="app-container">
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="logo">
+      <div class="logo-icon">SF</div>
+      <div>
+        <div>ScriptForge</div>
+        <div style="font-size:11px;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:normal">Công cụ viết kịch bản · Shot List · Storyboard AI</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-secondary" onclick="document.getElementById('apiSettingsModal').style.display='block'">⚙️ Cài đặt AI</button>
+      <button class="btn btn-secondary" onclick="exportAllData()">⬇ Backup</button>
+      <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">⬆ Restore</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importAllData(event)">
+    </div>
+  </header>
+
+  <!-- TAB NAVIGATION -->
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('script')" data-tab="script">📝 Viết kịch bản</button>
+    <button class="tab-btn" onclick="switchTab('shot')" data-tab="shot">🎬 Shot List</button>
+    <button class="tab-btn" onclick="switchTab('storyboard')" data-tab="storyboard">🎨 Storyboard</button>
+    <button class="tab-btn" onclick="switchTab('guide')" data-tab="guide">📖 Hướng dẫn</button>
+  </nav>
+
+  <!-- ========== TAB 1: SCRIPT WRITER ========== -->
+  <section id="tab-script" class="tab-content active">
+    <div class="grid-2">
+      
+      <!-- LEFT: Controls -->
+      <div class="space-y-4">
+        <div class="card">
+          <div class="section-title">
+            <span class="section-num">01</span>
+            <h2>Thêm dòng kịch bản</h2>
           </div>
           <div>
-            <p style="font-family:monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted)">Open Source · Free Forever</p>
-            <h1 class="text-4xl font-bold" style="color:var(--text);letter-spacing:-0.02em;line-height:1.15">
-              Tự tạo tool kịch bản trên <span style="background:linear-gradient(100deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent">GitHub</span>
-            </h1>
+            <label>Loại dòng</label>
+            <select id="lineType">
+              <option value="scene">Scene Heading (INT./EXT.)</option>
+              <option value="action">Action (Mô tả hành động)</option>
+              <option value="character">Character (Tên nhân vật)</option>
+              <option value="dialogue">Dialogue (Thoại)</option>
+              <option value="parenthetical">Parenthetical (Phụ chú)</option>
+              <option value="transition">Transition (Cắt cảnh)</option>
+            </select>
+          </div>
+          <div>
+            <label>Nội dung</label>
+            <textarea id="lineContent" placeholder="VD: INT. NHÀ HÀNG - NGÀY" onkeydown="if(event.ctrlKey&&event.key==='Enter')addScriptLine()"></textarea>
+          </div>
+          <button class="btn btn-primary" style="width:100%;margin-top:12px" onclick="addScriptLine()">+ Thêm vào kịch bản</button>
+          <p style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center">💡 Ctrl+Enter để thêm nhanh</p>
+        </div>
+
+        <div class="card">
+          <div class="section-title">
+            <span class="section-num">02</span>
+            <h2>Quản lý</h2>
+          </div>
+          <div class="space-y-2">
+            <button class="btn btn-secondary" style="width:100%" onclick="loadSampleScript()">📋 Tải mẫu phim ngắn</button>
+            <button class="btn btn-secondary" style="width:100%" onclick="exportScript()">⬇ Xuất JSON</button>
+            <button class="btn btn-secondary" style="width:100%" onclick="printScript()">🖨 In / Lưu PDF</button>
+            <button class="btn btn-ghost" style="width:100%" onclick="clearScript()">🗑 Xóa toàn bộ</button>
+          </div>
+          <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)">
+              <span>Số dòng:</span>
+              <span class="pill" id="lineCount">0</span>
+            </div>
+            <p style="font-size:11px;color:var(--muted);margin-top:8px">💾 Dữ liệu lưu tự động trên trình duyệt</p>
           </div>
         </div>
-        <p style="color:var(--muted);max-width:700px;line-height:1.7" class="text-base mt-3">
-          Hoàn toàn MIỄN PHÍ với GitHub Pages. Xây dựng bằng HTML/CSS/JS thuần, lưu dữ liệu trên trình duyệt (localStorage), không cần server, không cần database. Dưới đây là hướng dẫn + tool demo hoạt động được.
-        </p>
+
+        <div class="card">
+          <div class="section-title">
+            <span class="section-num">03</span>
+            <h2>AI Gợi ý</h2>
+          </div>
+          <div>
+            <label>Loại gợi ý</label>
+            <select id="aiSuggestType">
+              <option value="next_scene">Gợi ý cảnh tiếp theo</option>
+              <option value="dialogue">Viết thoại cho nhân vật</option>
+              <option value="conflict">Tăng xung đột</option>
+              <option value="twist">Cú ngoặt kịch tính</option>
+              <option value="cliffhanger">Kết thúc tập (Cliffhanger)</option>
+            </select>
+          </div>
+          <div>
+            <label>Nhân vật / Bối cảnh (tùy chọn)</label>
+            <input type="text" id="aiContext" placeholder="VD: Lâm bị mẹ chồng khinh bỉ">
+          </div>
+          <button class="btn btn-ai" style="margin-top:12px" onclick="aiSuggestScript()" id="aiSuggestBtn">✨ AI Gợi ý kịch bản</button>
+          <div id="aiSuggestResult" style="margin-top:12px;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--muted);min-height:60px;display:none"></div>
+        </div>
       </div>
 
-      <!-- TABS -->
-      <div class="reveal mb-8">
-        <div class="flex flex-wrap gap-1 mb-6 border-b" style="border-color:var(--border)">
-          <button class="tab-btn active px-4 py-2 text-sm font-medium rounded-t-lg" onclick="switchTab(event,'guide')" style="color:var(--muted);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer">Hướng dẫn GitHub</button>
-          <button class="tab-btn px-4 py-2 text-sm font-medium rounded-t-lg" onclick="switchTab(event,'demo-script')" style="color:var(--muted);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer">Demo: Viết kịch bản</button>
-          <button class="tab-btn px-4 py-2 text-sm font-medium rounded-t-lg" onclick="switchTab(event,'demo-shot')" style="color:var(--muted);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer">Demo: Shot List</button>
-          <button class="tab-btn px-4 py-2 text-sm font-medium rounded-t-lg" onclick="switchTab(event,'demo-story')" style="color:var(--muted);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer">Demo: Storyboard</button>
-          <button class="tab-btn px-4 py-2 text-sm font-medium rounded-t-lg" onclick="switchTab(event,'template')" style="color:var(--muted);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer">Code template</button>
+      <!-- RIGHT: Script Display -->
+      <div class="card">
+        <div class="section-title">
+          <span class="section-num">📄</span>
+          <h2>Kịch bản</h2>
+        </div>
+        <div class="script-display" id="scriptDisplay">
+          <div class="empty-state">
+            Chưa có nội dung.<br><br>
+            <button class="btn btn-secondary" onclick="loadSampleScript()">📋 Tải mẫu thử</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TAB 2: SHOT LIST ========== -->
+  <section id="tab-shot" class="tab-content">
+    <div class="grid-2">
+      
+      <!-- LEFT: Controls -->
+      <div class="space-y-4">
+        <div class="card">
+          <div class="section-title">
+            <span class="section-num">01</span>
+            <h2>Thêm shot</h2>
+          </div>
+          <div class="grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div><label>Scene #</label><input type="text" id="shotScene" placeholder="1A"></div>
+            <div><label>Shot #</label><input type="text" id="shotNum" placeholder="1"></div>
+          </div>
+          <div><label>Loại shot</label>
+            <select id="shotType">
+              <option value="ECU">ECU - Extreme Close Up</option>
+              <option value="CU">CU - Close Up</option>
+              <option value="MCU">MCU - Medium Close Up</option>
+              <option value="MS">MS - Medium Shot</option>
+              <option value="MLS">MLS - Medium Long Shot</option>
+              <option value="LS">LS - Long Shot</option>
+              <option value="ELS">ELS - Extreme Long Shot</option>
+              <option value="OTS">OTS - Over The Shoulder</option>
+              <option value="POV">POV</option>
+              <option value="2S">2S - Two Shot</option>
+            </select>
+          </div>
+          <div><label>Góc máy</label>
+            <select id="shotAngle">
+              <option value="Eye level">Eye level</option>
+              <option value="Low angle">Low angle</option>
+              <option value="High angle">High angle</option>
+              <option value="Bird's eye">Bird's eye view</option>
+              <option value="Dutch">Dutch angle</option>
+            </select>
+          </div>
+          <div><label>Camera movement</label>
+            <select id="shotMove">
+              <option value="Static">Static</option>
+              <option value="Pan">Pan</option>
+              <option value="Tilt">Tilt</option>
+              <option value="Dolly in">Dolly in</option>
+              <option value="Dolly out">Dolly out</option>
+              <option value="Tracking">Tracking</option>
+              <option value="Handheld">Handheld</option>
+              <option value="Crane">Crane / Jib</option>
+              <option value="Steadicam">Steadicam</option>
+            </select>
+          </div>
+          <div><label>Mô tả nội dung</label><textarea id="shotDesc" placeholder="Mô tả chi tiết shot..."></textarea></div>
+          <div><label>Ghi chú (thiết bị, ánh sáng...)</label><input type="text" id="shotNote" placeholder="VD: 50mm f1.4, ánh sáng vàng ấm"></div>
+          <button class="btn btn-primary" style="width:100%;margin-top:12px" onclick="addShot()">+ Thêm vào shot list</button>
         </div>
 
-        <!-- TAB: GUIDE -->
-        <div id="tab-guide" class="tab-content active">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="space-y-4">
-              <div class="tool-card p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border)">
-                <div class="flex items-center gap-3 mb-3">
-                  <div style="width:36px;height:36px;border-radius:10px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700">1</div>
-                  <h3 class="font-semibold" style="color:var(--text)">Tạo repo GitHub</h3>
-                </div>
-                <ol class="text-sm space-y-1.5" style="color:var(--muted);line-height:1.7;padding-left:20px">
-                  <li>Đăng nhập GitHub → New repository</li>
-                  <li>Đặt tên: <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-size:12px;color:var(--accent)">script-tool</code></li>
-                  <li>Chọn Public → Add README → Create</li>
-                </ol>
-              </div>
-
-              <div class="tool-card p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border)">
-                <div class="flex items-center gap-3 mb-3">
-                  <div style="width:36px;height:36px;border-radius:10px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700">2</div>
-                  <h3 class="font-semibold" style="color:var(--text)">Upload file HTML</h3>
-                </div>
-                <ol class="text-sm space-y-1.5" style="color:var(--muted);line-height:1.7;padding-left:20px">
-                  <li>Trong repo → Add file → Upload files</li>
-                  <li>Tải file <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-size:12px;color:var(--accent)">index.html</code> (copy code từ tab "Code template")</li>
-                  <li>Commit changes</li>
-                </ol>
-              </div>
-
-              <div class="tool-card p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border)">
-                <div class="flex items-center gap-3 mb-3">
-                  <div style="width:36px;height:36px;border-radius:10px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700">3</div>
-                  <h3 class="font-semibold" style="color:var(--text)">Bật GitHub Pages</h3>
-                </div>
-                <ol class="text-sm space-y-1.5" style="color:var(--muted);line-height:1.7;padding-left:20px">
-                  <li>Settings → Pages (ở sidebar trái)</li>
-                  <li>Source: chọn <strong>Deploy from a branch</strong></li>
-                  <li>Branch: <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-size:12px">main</code> / <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-size:12px">/root</code></li>
-                  <li>Save → đợi 1-2 phút</li>
-                  <li>Truy cập: <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-size:12px;color:var(--accent)">https://[username].github.io/script-tool</code></li>
-                </ol>
-              </div>
-            </div>
-
-            <div class="space-y-4">
-              <div class="tool-card p-5 rounded-xl" style="background:linear-gradient(135deg,var(--accent-soft),var(--accent2-soft));border:1px solid var(--border)">
-                <h3 class="font-semibold mb-3" style="color:var(--text)">Những gì có thể làm miễn phí</h3>
-                <div class="grid grid-cols-2 gap-3 text-sm">
-                  <div class="p-3 rounded-lg" style="background:var(--card);border:1px solid var(--border)">
-                    <div style="color:var(--accent);font-weight:700;margin-bottom:4px">✓ Viết kịch bản</div>
-                    <p style="color:var(--muted);font-size:12px">Định dạng tự động Scene Heading, Action, Character, Dialogue, Parenthetical</p>
-                  </div>
-                  <div class="p-3 rounded-lg" style="background:var(--card);border:1px solid var(--border)">
-                    <div style="color:var(--accent);font-weight:700;margin-bottom:4px">✓ Lên shot list</div>
-                    <p style="color:var(--muted);font-size:12px">Shot number, shot type, góc máy, mô tả, thiết bị, ghi chú</p>
-                  </div>
-                  <div class="p-3 rounded-lg" style="background:var(--card);border:1px solid var(--border)">
-                    <div style="color:var(--accent);font-weight:700;margin-bottom:4px">✓ Storyboard cơ bản</div>
-                    <p style="color:var(--muted);font-size:12px">Lưới các ô, upload ảnh, mô tả hành động, thoại</p>
-                  </div>
-                  <div class="p-3 rounded-lg" style="background:var(--card);border:1px solid var(--border)">
-                    <div style="color:var(--accent);font-weight:700;margin-bottom:4px">✓ Lưu & xuất</div>
-                    <p style="color:var(--muted);font-size:12px">Lưu localStorage, xuất JSON, in/PDF, import/export</p>
-                  </div>
-                  <div class="p-3 rounded-lg" style="background:var(--card);border:1px solid var(--border)">
-                    <div style="color:var(--accent2);font-weight:700;margin-bottom:4px">✓ Tích hợp AI</div>
-                    <p style="color:var(--muted);font-size:12px">Dùng API miễn phí (Gemini Free tier, Hugging Face) để gợi ý kịch bản</p>
-                  </div>
-                  <div class="p-3 rounded-lg" style="background:var(--card);border:1px solid var(--border)">
-                    <div style="color:var(--accent2);font-weight:700;margin-bottom:4px">✓ Đa dự án</div>
-                    <p style="color:var(--muted);font-size:12px">Chuyển đổi giữa các kịch bản, quản lý nhiều dự án</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="tool-card p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border)">
-                <h3 class="font-semibold mb-3" style="color:var(--text)">Giới hạn cần biết</h3>
-                <ul class="text-sm space-y-2" style="color:var(--muted);line-height:1.7;padding-left:18px">
-                  <li><strong style="color:var(--text)">Dữ liệu chỉ trên trình duyệt:</strong> localStorage không đồng bộ giữa các thiết bị. Giải pháp: thêm tính năng Export/Import JSON.</li>
-                  <li><strong style="color:var(--text)">GitHub Pages chỉ static:</strong> Không chạy PHP/Node/Python. Nhưng JS thuần đủ mạnh cho 90% nhu cầu.</li>
-                  <li><strong style="color:var(--text)">AI image gen:</strong> Storyboard tự động cần API key (có thể dùng Gemini Free tier 15 yêu cầu/phút).</li>
-                  <li><strong style="color:var(--text)">Giới hạn dung lượng:</strong> GitHub repo 1GB, Pages 1GB băng thông/tháng - rất dư cho tool kịch bản.</li>
-                </ul>
-              </div>
+        <div class="card">
+          <div class="section-title">
+            <span class="section-num">02</span>
+            <h2>Quản lý</h2>
+          </div>
+          <div class="space-y-2">
+            <button class="btn btn-secondary" style="width:100%" onclick="exportShotsCSV()">⬇ Xuất CSV (Excel)</button>
+            <button class="btn btn-secondary" style="width:100%" onclick="convertToStoryboard()">🎨 Chuyển sang Storyboard</button>
+            <button class="btn btn-ghost" style="width:100%" onclick="clearShots()">🗑 Xóa toàn bộ</button>
+          </div>
+          <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)">
+              <span>Tổng số shot:</span>
+              <span class="pill pill-accent2" id="shotCount">0</span>
             </div>
           </div>
         </div>
-
-        <!-- TAB: DEMO SCRIPT -->
-        <div id="tab-demo-script" class="tab-content">
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Input -->
-            <div class="lg:col-span-1 space-y-4">
-              <div class="p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border)">
-                <h3 class="font-semibold mb-4" style="color:var(--text)">Thêm dòng kịch bản</h3>
-                <div class="space-y-3">
-                  <div>
-                    <label>Loại dòng</label>
-                    <select id="lineType">
-                      <option value="scene">Scene Heading</option>
-                      <option value="action">Action</option>
-                      <option value="character">Character</option>
-                      <option value="dialogue">Dialogue</option>
-                      <option value="paren">Parenthetical</option>
-                      <option value="transition">Transition</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label>Nội dung</label>
-                    <textarea id="lineContent" placeholder="VD: INT. NHÀ HÀNG - NGÀY"></textarea>
-                  </div>
-                  <button class="btn-primary w-full" onclick="addScriptLine()">+ Thêm vào kịch bản</button>
-                </div>
-              </div>
-              <div class="p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border)">
-                <h3 class="font-semibold mb-3" style="color:var(--text)">Quản lý</h3>
-                <div class="space-y-2">
-                  <button class="btn-secondary w-full" onclick="exportScript()">⬇ Xuất JSON</button>
-                  <button class="btn-secondary w-full" onclick="printScript()">🖨 In / Lưu PDF</button>
-                  <button class="btn-ghost w-full" onclick="clearScript()">Xóa tất cả</button>
-                </div>
-                <p class="text-xs mt-4" style="color:var(--muted)">Dữ liệu được lưu tự động trên trình duyệt của bạn</p>
-              </div>
-            </div>
-            <!-- Script display -->
-            <div class="lg:col-span-2">
-              <div class="p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border);min-height:500px">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold" style="color:var(--text)">Kịch bản</h3>
-                  <span class="pill" style="background:var(--accent-soft);color:var(--text)" id="lineCount">0 dòng</span>
-                </div>
-                <div id="scriptDisplay" style="font-family:'Courier New',monospace;font-size:13px;line-height:1.6">
-                  <p style="color:var(--muted);text-align:center;padding:40px">Chưa có nội dung. Thêm dòng kịch bản từ bên trái hoặc <button class="btn-ghost" style="color:var(--accent);text-decoration:underline" onclick="loadSampleScript()">tải mẫu thử</button></p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- TAB: DEMO SHOT LIST -->
-        <div id="tab-demo-shot" class="tab-content">
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="lg:col-span-1 space-y-4">
-              <div class="p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border)">
-                <h3 class="font-semibold mb-4" style="color:var(--text)">Thêm shot</h3>
-                <div class="space-y-3">
-                  <div><label>Scene #</label><input type="text" id="shotScene" placeholder="1A"></div>
-                  <div><label>Shot #</label><input type="text" id="shotNum" placeholder="1"></div>
-                  <div><label>Loại shot</label>
-                    <select id="shotType">
-                      <option value="ECU">ECU - Extreme Close Up</option>
-                      <option value="CU">CU - Close Up</option>
-                      <option value="MCU">MCU - Medium Close Up</option>
-                      <option value="MS">MS - Medium Shot</option>
-                      <option value="MLS">MLS - Medium Long Shot</option>
-                      <option value="LS">LS - Long Shot</option>
-                      <option value="ELS">ELS - Extreme Long Shot</option>
-                      <option value="OTS">OTS - Over The Shoulder</option>
-                      <option value="POV">POV</option>
-                    </select>
-                  </div>
-                  <div><label>Góc máy</label>
-                    <select id="shotAngle">
-                      <option value="Eye level">Eye level</option>
-                      <option value="Low angle">Low angle</option>
-                      <option value="High angle">High angle</option>
-                      <option value="Bird's eye">Bird's eye view</option>
-                      <option value="Dutch">Dutch angle</option>
-                    </select>
-                  </div>
-                  <div><label>Camera movement</label>
-                    <select id="shotMove">
-                      <option value="Static">Static</option>
-                      <option value="Pan">Pan</option>
-                      <option value="Tilt">Tilt</option>
-                      <option value="Dolly in">Dolly in</option>
-                      <option value="Dolly out">Dolly out</option>
-                      <option value="Tracking">Tracking</option>
-                      <option value="Handheld">Handheld</option>
-                      <option value="Crane">Crane / Jib</option>
-                    </select>
-                  </div>
-                  <div><label>Mô tả</label><textarea id="shotDesc" placeholder="Mô tả nội dung shot..."></textarea></div>
-                  <div><label>Ghi chú</label><input type="text" id="shotNote" placeholder="Thiết bị, ánh sáng..."></div>
-                  <button class="btn-primary w-full" onclick="addShot()">+ Thêm shot</button>
-                </div>
-              </div>
-              <div class="p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border)">
-                <button class="btn-secondary w-full" onclick="exportShots()">⬇ Xuất shot list</button>
-              </div>
-            </div>
-            <div class="lg:col-span-2">
-              <div class="p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border);min-height:500px;overflow-x:auto">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold" style="color:var(--text)">Shot List</h3>
-                  <span class="pill" style="background:var(--accent2-soft);color:var(--text)" id="shotCount">0 shots</span>
-                </div>
-                <table class="w-full text-xs" style="min-width:700px">
-                  <thead>
-                    <tr style="color:var(--muted);border-bottom:1px solid var(--border)" class="text-left">
-                      <th class="pb-2 font-medium">Scene</th>
-                      <th class="pb-2 font-medium">Shot</th>
-                      <th class="pb-2 font-medium">Type</th>
-                      <th class="pb-2 font-medium">Angle</th>
-                      <th class="pb-2 font-medium">Move</th>
-                      <th class="pb-2 font-medium">Mô tả</th>
-                      <th class="pb-2 font-medium">Ghi chú</th>
-                      <th class="pb-2 font-medium"></th>
-                    </tr>
-                  </thead>
-                  <tbody id="shotTableBody" style="color:var(--text)">
-                    <tr><td colspan="8" style="color:var(--muted);text-align:center;padding:40px">Chưa có shot nào. Thêm từ bên trái.</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- TAB: DEMO STORYBOARD -->
-        <div id="tab-demo-story" class="tab-content">
-          <div class="p-5 rounded-xl mb-4" style="background:var(--card);border:1px solid var(--border)">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="font-semibold" style="color:var(--text)">Storyboard Grid</h3>
-              <div class="flex gap-2">
-                <button class="btn-secondary" onclick="addStoryboardPanel()">+ Thêm ô</button>
-                <button class="btn-secondary" onclick="exportStoryboard()">⬇ Xuất</button>
-              </div>
-            </div>
-            <div id="storyboardGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div class="p-4 rounded-xl text-center" style="background:var(--bg);border:2px dashed var(--border);padding:40px;color:var(--muted)">
-                Chưa có ô nào. Nhấn "+ Thêm ô" để bắt đầu tạo storyboard.
-              </div>
-            </div>
-          </div>
-          <div class="p-4 rounded-xl text-sm" style="background:var(--accent-soft);border:1px solid var(--border);color:var(--muted)">
-            <strong style="color:var(--text)">Lưu ý:</strong> Tool này cho phép upload ảnh từ máy bạn làm storyboard panel. Để AI tự động tạo hình từ mô tả, bạn cần tích hợp API của Gemini, DALL-E, hoặc Stable Diffusion (cần API key).
-          </div>
-        </div>
-
-        <!-- TAB: TEMPLATE -->
-        <div id="tab-template" class="tab-content">
-          <div class="p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border)">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="font-semibold" style="color:var(--text)">Code template cơ bản (index.html)</h3>
-              <button class="btn-secondary" onclick="copyTemplate()">📋 Copy toàn bộ</button>
-            </div>
-            <div class="code-block" id="templateCode">
-&lt;!DOCTYPE html&gt;
-&lt;html lang="vi"&gt;
-&lt;head&gt;
-  &lt;meta charset="UTF-8"&gt;
-  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-  &lt;title&gt;Script Tool - Công cụ viết kịch bản miễn phí&lt;/title&gt;
-  &lt;style&gt;
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: system-ui, sans-serif; background: #1a1a1d; color: #e8e5df; padding: 20px; }
-    .container { max-width: 1000px; margin: 0 auto; }
-    .toolbar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-    button { background: #c47046; color: #1a1a1d; border: none; padding: 10px 16px; 
-             border-radius: 6px; cursor: pointer; font-weight: 600; }
-    button:hover { opacity: 0.9; }
-    .btn-sec { background: #2a2a2f; color: #e8e5df; border: 1px solid #444; }
-    #scriptEditor { width: 100%; min-height: 500px; background: #2a2a2f; 
-                    color: #e8e5df; border: 1px solid #444; border-radius: 8px;
-                    padding: 20px; font-family: 'Courier New', monospace; 
-                    font-size: 14px; line-height: 1.6; resize: vertical; }
-    .status { margin-top: 10px; color: #9a978f; font-size: 13px; }
-  &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;div class="container"&gt;
-    &lt;h1 style="margin-bottom:20px"&gt;🎬 Công cụ viết kịch bản&lt;/h1&gt;
-    &lt;div class="toolbar"&gt;
-      &lt;button onclick="saveScript()"&gt;💾 Lưu&lt;/button&gt;
-      &lt;button onclick="loadScript()"&gt;📂 Tải&lt;/button&gt;
-      &lt;button onclick="exportJSON()"&gt;⬇ Xuất JSON&lt;/button&gt;
-      &lt;button onclick="printScript()"&gt;🖨 In/PDF&lt;/button&gt;
-      &lt;button class="btn-sec" onclick="insertFormat('scene')"&gt;SCENE&lt;/button&gt;
-      &lt;button class="btn-sec" onclick="insertFormat('char')"&gt;CHAR&lt;/button&gt;
-      &lt;button class="btn-sec" onclick="insertFormat('dialog')"&gt;DIALOG&lt;/button&gt;
-    &lt;/div&gt;
-    &lt;textarea id="scriptEditor" placeholder="Bắt đầu viết kịch bản..."&gt;&lt;/textarea&gt;
-    &lt;div class="status" id="status"&gt;Dữ liệu được lưu tự động&lt;/div&gt;
-  &lt;/div&gt;
-
-  &lt;script&gt;
-    const editor = document.getElementById('scriptEditor');
-    
-    // Auto-save
-    editor.addEventListener('input', () =&gt; {
-      localStorage.setItem('myScript', editor.value);
-      updateStatus('Đã lưu tự động: ' + new Date().toLocaleTimeString());
-    });
-    
-    // Load on startup
-    window.addEventListener('load', () =&gt; {
-      const saved = localStorage.getItem('myScript');
-      if (saved) editor.value = saved;
-    });
-    
-    function saveScript() {
-      localStorage.setItem('myScript', editor.value);
-      updateStatus('Đã lưu thành công!');
-    }
-    
-    function loadScript() {
-      const saved = localStorage.getItem('myScript');
-      if (saved) { editor.value = saved; updateStatus('Đã tải kịch bản'); }
-    }
-    
-    function exportJSON() {
-      const data = { content: editor.value, date: new Date().toISOString() };
-      const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'script_' + Date.now() + '.json';
-      a.click();
-    }
-    
-    function printScript() { window.print(); }
-    
-    function insertFormat(type) {
-      const formats = {
-        scene: '\\nINT./EXT. ĐỊA ĐIỂM - THỜI GIAN\\n',
-        char: '\\n\\t\\t\\tNHÂN VẬT\\n\\t\\t\\t(phụ chú)\\n\\tThoại...\\n',
-        dialog: '\\n\\t\\t\\t(phụ chú)\\n\\tThoại...\\n'
-      };
-      editor.value += formats[type];
-      editor.focus();
-    }
-    
-    function updateStatus(msg) { document.getElementById('status').textContent = msg; }
-  &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-            </div>
-            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm" style="color:var(--muted);line-height:1.7">
-              <div class="p-4 rounded-lg" style="background:var(--bg);border:1px solid var(--border)">
-                <strong style="color:var(--text)">Các tính năng có trong template:</strong>
-                <ul class="mt-2" style="padding-left:18px">
-                  <li>Auto-save vào localStorage</li>
-                  <li>Xuất file JSON backup</li>
-                  <li>In / lưu PDF trực tiếp</li>
-                  <li>Phím tắt chèn định dạng</li>
-                  <li>Responsive trên mobile</li>
-                </ul>
-              </div>
-              <div class="p-4 rounded-lg" style="background:var(--bg);border:1px solid var(--border)">
-                <strong style="color:var(--text)">Nâng cấp có thể làm thêm:</strong>
-                <ul class="mt-2" style="padding-left:18px">
-                  <li>Tab Shot List + Storyboard</li>
-                  <li>Đa dự án (switch giữa các script)</li>
-                  <li>Tích hợp Gemini API gợi ý kịch bản</li>
-                  <li>Collaboration với Firebase</li>
-                  <li>Template theo thể loại phim ngắn</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
 
-      <!-- Footer -->
-      <div class="mt-16 pt-6" style="border-top:1px solid var(--border)">
-        <p class="text-center text-xs" style="color:var(--muted)">Dữ liệu demo được lưu trên trình duyệt của bạn (localStorage) · Xóa cache = mất dữ liệu · Hãy dùng tính năng Export để backup</p>
+      <!-- RIGHT: Shot List Table -->
+      <div class="card">
+        <div class="section-title">
+          <span class="section-num">🎬</span>
+          <h2>Shot List</h2>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Scene</th>
+                <th>Shot</th>
+                <th>Type</th>
+                <th>Angle</th>
+                <th>Move</th>
+                <th>Mô tả</th>
+                <th>Ghi chú</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="shotTableBody">
+              <tr><td colspan="8"><div class="empty-state" style="padding:30px">Chưa có shot nào. Thêm từ bên trái.</div></td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ========== TAB 3: STORYBOARD ========== -->
+  <section id="tab-storyboard" class="tab-content">
+    
+    <!-- AI Provider & Controls -->
+    <div class="card" style="margin-bottom:20px">
+      <div class="section-title">
+        <span class="section-num">🎨</span>
+        <h2>Tạo Storyboard bằng AI</h2>
+      </div>
+      
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+        <div>
+          <label style="margin-bottom:8px">Chọn nhà cung cấp AI</label>
+          <div class="provider-select" id="providerSelect">
+            <button class="provider-btn active" data-provider="pollinations" onclick="setProvider('pollinations')">🌼 Pollinations (Miễn phí)</button>
+            <button class="provider-btn" data-provider="gemini" onclick="setProvider('gemini')">🔮 Google Gemini</button>
+            <button class="provider-btn" data-provider="huggingface" onclick="setProvider('huggingface')">🤗 Hugging Face</button>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-secondary" onclick="addStoryboardPanel()">+ Thêm ô</button>
+          <button class="btn btn-ai" onclick="generateAllStoryboard()" id="genAllBtn">✨ AI Tạo toàn bộ</button>
+          <button class="btn btn-secondary" onclick="printStoryboard()">🖨 In Storyboard</button>
+        </div>
+      </div>
+      
+      <div id="hfModelDiv" style="margin-top:12px;display:none">
+        <label style="margin-bottom:6px">Model Hugging Face</label>
+        <select id="hfModel" style="max-width:400px">
+          <option value="stabilityai/sdxl-turbo">SDXL Turbo (Nhanh, chất lượng tốt)</option>
+          <option value="black-forest-labs/FLUX.1-schnell">FLUX.1 Schnell (Chất lượng cao, nhanh)</option>
+          <option value="alvdansen/flux-koda">Flux Koda (Phong cách cinematic)</option>
+          <option value="stabilityai/stable-diffusion-3.5-large">SD 3.5 Large (Chất lượng cao nhất)</option>
+        </select>
+      </div>
+      
+      <div id="providerNote" style="margin-top:12px;padding:10px 14px;background:var(--accent-soft);border-radius:8px;font-size:12px;color:var(--text)">
+        <strong>🌼 Pollinations.ai:</strong> Miễn phí 100%, không cần API key, tạo ảnh nhanh. Phù hợp cho người mới bắt đầu và phác thảo storyboard.
+      </div>
+    </div>
+
+    <!-- Storyboard Grid -->
+    <div class="card">
+      <div class="storyboard-grid" id="storyboardGrid">
+        <div class="empty-state" style="grid-column:1/-1">
+          Chưa có panel nào.<br><br>
+          <button class="btn btn-secondary" onclick="addStoryboardPanel()">+ Thêm ô đầu tiên</button>
+          <span style="margin:0 12px;color:var(--muted)">hoặc</span>
+          <button class="btn btn-secondary" onclick="convertToStoryboard()">🎬 Nhập từ Shot List</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TAB 4: GUIDE ========== -->
+  <section id="tab-guide" class="tab-content">
+    <div class="card">
+      <div class="section-title">
+        <span class="section-num">📖</span>
+        <h2>Hướng dẫn sử dụng</h2>
+      </div>
+      
+      <div class="grid-3" style="margin-bottom:30px">
+        <div style="padding:20px;background:var(--bg);border:1px solid var(--border);border-radius:12px;border-top:3px solid var(--accent)">
+          <div style="font-size:24px;margin-bottom:10px">📝</div>
+          <h3 style="color:var(--text);margin:0 0 8px 0;font-size:16px">Bước 1: Viết kịch bản</h3>
+          <p style="color:var(--muted);font-size:13px;line-height:1.7">Chọn loại dòng (Scene, Action, Character, Dialogue...) và nhập nội dung. Kịch bản được định dạng tự động theo chuẩn điện ảnh. Dùng mẫu phim ngắn để hiểu cấu trúc.</p>
+        </div>
+        <div style="padding:20px;background:var(--bg);border:1px solid var(--border);border-radius:12px;border-top:3px solid var(--accent2)">
+          <div style="font-size:24px;margin-bottom:10px">🎬</div>
+          <h3 style="color:var(--text);margin:0 0 8px 0;font-size:16px">Bước 2: Lên Shot List</h3>
+          <p style="color:var(--muted);font-size:13px;line-height:1.7">Phân tích từng cảnh thành các shot cụ thể: loại shot (CU, MS, LS...), góc máy, chuyển động camera. Xuất ra CSV để mở trong Excel/Google Sheets.</p>
+        </div>
+        <div style="padding:20px;background:var(--bg);border:1px solid var(--border);border-radius:12px;border-top:3px solid var(--accent)">
+          <div style="font-size:24px;margin-bottom:10px">🎨</div>
+          <h3 style="color:var(--text);margin:0 0 8px 0;font-size:16px">Bước 3: Tạo Storyboard</h3>
+          <p style="color:var(--muted);font-size:13px;line-height:1.7">Thêm panel, nhập mô tả, dùng AI tạo ảnh tự động. Hoặc chuyển đổi trực tiếp từ Shot List. Có thể upload ảnh thủ công hoặc dùng AI tạo.</p>
+        </div>
+      </div>
+
+      <div style="padding:20px;background:var(--bg);border:1px solid var(--border);border-radius:12px;margin-bottom:20px">
+        <h3 style="color:var(--text);margin-top:0">⚙️ Về các nhà cung cấp AI</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:16px">
+          <div>
+            <div style="color:var(--accent);font-weight:700;margin-bottom:6px">🌼 Pollinations.ai (Mặc định)</div>
+            <p style="color:var(--muted);font-size:13px;line-height:1.6;margin:0">Miễn phí 100%, không cần đăng ký, không cần API key. Chất lượng khá, tạo ảnh nhanh. Phù hợp cho hầu hết nhu cầu storyboard.</p>
+          </div>
+          <div>
+            <div style="color:var(--accent);font-weight:700;margin-bottom:6px">🔮 Google Gemini / Imagen 3</div>
+            <p style="color:var(--muted);font-size:13px;line-height:1.6;margin:0">Chất lượng cao nhất, hiểu ngữ cảnh tốt. Cần API key từ <code style="background:var(--card);padding:2px 6px;border-radius:4px;font-size:11px">aistudio.google.com/apikey</code>. Có chi phí (~$0.03/ảnh).</p>
+          </div>
+          <div>
+            <div style="color:var(--accent2);font-weight:700;margin-bottom:6px">🤗 Hugging Face</div>
+            <p style="color:var(--muted);font-size:13px;line-height:1.6;margin:0">Đa dạng model ảnh (SDXL, FLUX...). Cần token từ <code style="background:var(--card);padding:2px 6px;border-radius:4px;font-size:11px">huggingface.co/settings/tokens</code>. Có gói miễn phí giới hạn.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:20px;background:var(--accent-soft);border:1px solid var(--border);border-radius:12px">
+        <h3 style="color:var(--text);margin-top:0">💡 Mẹo viết prompt tạo ảnh tốt</h3>
+        <ul style="color:var(--muted);font-size:13px;line-height:1.8;padding-left:20px;margin:0">
+          <li><strong style="color:var(--text)">Chỉ rõ loại shot:</strong> "Close-up", "Medium shot", "Wide shot", "Over-the-shoulder"</li>
+          <li><strong style="color:var(--text)">Góc máy:</strong> "Low angle", "High angle", "Eye level", "Dutch angle"</li>
+          <li><strong style="color:var(--text)">Ánh sáng:</strong> "Cinematic lighting", "Backlight", "Soft diffused light", "Harsh shadows", "Golden hour"</li>
+          <li><strong style="color:var(--text)">Phong cách:</strong> "Storyboard sketch", "Cinematic", "Film noir", "Anime style", "Black and white"</li>
+          <li><strong style="color:var(--text)">Tỷ lệ khung hình:</strong> Thêm "16:9" cho phim ngang, "9:16" cho phim dọc (vertical micro-drama)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ========== API SETTINGS MODAL ========== -->
+<div id="apiSettingsModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:100;align-items:center;justify-content:center;padding:20px">
+  <div class="card" style="max-width:600px;width:100%;max-height:90vh;overflow-y:auto">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <h2 style="margin:0;font-size:18px">⚙️ Cài đặt AI</h2>
+      <button class="btn btn-ghost" onclick="document.getElementById('apiSettingsModal').style.display='none'" style="font-size:20px;padding:0 8px">✕</button>
+    </div>
+    
+    <div class="api-settings">
+      <div>
+        <label style="margin-top:0">🔮 Google Gemini API Key</label>
+        <div class="api-input-wrapper">
+          <input type="password" id="geminiApiKey" placeholder="AIzaSy..." oninput="saveApiKey('gemini', this.value)">
+          <button class="toggle-visibility" onclick="toggleVisibility('geminiApiKey', this)">👁</button>
+        </div>
+        <p style="font-size:11px;color:var(--muted);margin-top:6px">Lấy key tại: <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--accent)">aistudio.google.com/apikey</a></p>
+      </div>
+      <div>
+        <label style="margin-top:0">🤗 Hugging Face Token</label>
+        <div class="api-input-wrapper">
+          <input type="password" id="hfToken" placeholder="hf_..." oninput="saveApiKey('hf', this.value)">
+          <button class="toggle-visibility" onclick="toggleVisibility('hfToken', this)">👁</button>
+        </div>
+        <p style="font-size:11px;color:var(--muted);margin-top:6px">Lấy token tại: <a href="https://huggingface.co/settings/tokens" target="_blank" style="color:var(--accent)">huggingface.co/settings/tokens</a></p>
+      </div>
+    </div>
+    
+    <div style="padding:14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;font-size:12px;color:var(--muted);line-height:1.7">
+      <strong style="color:var(--text)">🔒 Bảo mật:</strong> API key và token chỉ được lưu trên trình duyệt của bạn (localStorage), không bao giờ gửi đến server nào khác. Nếu bạn share link GitHub Pages cho người khác, họ sẽ cần nhập key của riêng họ.
+    </div>
+    
+    <div style="margin-top:20px;text-align:right">
+      <button class="btn btn-primary" onclick="document.getElementById('apiSettingsModal').style.display='none'">Đã xong</button>
     </div>
   </div>
 </div>
 
+<!-- Toast container -->
+<div id="toastContainer"></div>
+
 <script>
-// ===== TAB SWITCHING =====
-function switchTab(evt, tabName) {
-  var i, tabcontent, tabbuttons;
-  tabcontent = document.getElementsByClassName("tab-content");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].classList.remove("active");
-  }
-  tabbuttons = document.getElementsByClassName("tab-btn");
-  for (i = 0; i < tabbuttons.length; i++) {
-    tabbuttons[i].classList.remove("active");
-  }
-  document.getElementById("tab-" + tabName).classList.add("active");
-  evt.currentTarget.classList.add("active");
+// ============================================================
+// GLOBAL STATE & STORAGE
+// ============================================================
+let scriptLines = JSON.parse(localStorage.getItem('sf_script') || '[]');
+let shots = JSON.parse(localStorage.getItem('sf_shots') || '[]');
+let storyPanels = JSON.parse(localStorage.getItem('sf_storyboard') || '[]');
+let currentProvider = localStorage.getItem('sf_provider') || 'pollinations';
+
+// Load API keys
+const API_KEYS = {
+  gemini: localStorage.getItem('sf_gemini_key') || '',
+  hf: localStorage.getItem('sf_hf_token') || ''
+};
+
+// ============================================================
+// UTILITIES
+// ============================================================
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
 }
 
-// ===== SCRIPT WRITER =====
-let scriptLines = JSON.parse(localStorage.getItem('demoScript') || '[]');
+function showToast(message, type = 'info') {
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.style.borderColor = type === 'error' ? 'var(--danger)' : type === 'success' ? 'var(--success)' : 'var(--accent)';
+  toast.textContent = message;
+  document.getElementById('toastContainer').appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
 
+function toggleVisibility(inputId, btn) {
+  const input = document.getElementById(inputId);
+  input.type = input.type === 'password' ? 'text' : 'password';
+  btn.textContent = input.type === 'password' ? '👁' : '🙈';
+}
+
+function saveApiKey(provider, value) {
+  API_KEYS[provider] = value;
+  localStorage.setItem('sf_' + (provider === 'gemini' ? 'gemini_key' : 'hf_token'), value);
+}
+
+// ============================================================
+// TAB SWITCHING
+// ============================================================
+function switchTab(tabName) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tabName).classList.add('active');
+  document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+}
+
+// ============================================================
+// SCRIPT WRITER
+// ============================================================
 function renderScript() {
   const display = document.getElementById('scriptDisplay');
-  document.getElementById('lineCount').textContent = scriptLines.length + ' dòng';
+  document.getElementById('lineCount').textContent = scriptLines.length;
   
   if (scriptLines.length === 0) {
-    display.innerHTML = '<p style="color:var(--muted);text-align:center;padding:40px">Chưa có nội dung. Thêm dòng kịch bản từ bên trái hoặc <button class="btn-ghost" style="color:var(--accent);text-decoration:underline" onclick="loadSampleScript()">tải mẫu thử</button></p>';
+    display.innerHTML = '<div class="empty-state">Chưa có nội dung.<br><br><button class="btn btn-secondary" onclick="loadSampleScript()">📋 Tải mẫu thử</button></div>';
     return;
   }
   
-  const styles = {
-    scene: 'font-weight:700;text-transform:uppercase;margin:16px 0 8px;color:var(--accent)',
-    action: 'margin:8px 0;color:var(--text)',
-    character: 'text-align:center;text-transform:uppercase;margin:12px 0 4px;color:var(--text);font-weight:600',
-    dialogue: 'margin:0 80px;color:var(--text)',
-    paren: 'margin:0 120px;color:var(--muted);font-style:italic',
-    transition: 'text-align:right;text-transform:uppercase;margin:12px 0;color:var(--accent2)'
+  const classes = {
+    scene: 'scene-heading',
+    action: 'action',
+    character: 'character',
+    dialogue: 'dialogue',
+    parenthetical: 'parenthetical',
+    transition: 'transition'
   };
   
   display.innerHTML = scriptLines.map((line, i) => 
-    `<div class="script-line" style="${styles[line.type] || ''};padding:4px 8px;border-radius:4px;position:relative">
-       <button class="btn-ghost" onclick="deleteScriptLine(${i})" style="position:absolute;right:4px;top:2px;opacity:0.4">✕</button>
+    `<div class="script-line ${classes[line.type] || ''}">
+       <button class="btn btn-ghost delete-btn" onclick="deleteScriptLine(${i})">✕</button>
        ${escapeHtml(line.content)}
      </div>`
   ).join('');
@@ -459,171 +839,273 @@ function renderScript() {
 function addScriptLine() {
   const type = document.getElementById('lineType').value;
   const content = document.getElementById('lineContent').value.trim();
-  if (!content) return;
+  if (!content) { showToast('Nhập nội dung trước!', 'error'); return; }
   scriptLines.push({ type, content });
-  saveScriptData();
+  localStorage.setItem('sf_script', JSON.stringify(scriptLines));
   renderScript();
   document.getElementById('lineContent').value = '';
+  document.getElementById('lineContent').focus();
 }
 
 function deleteScriptLine(i) {
   scriptLines.splice(i, 1);
-  saveScriptData();
+  localStorage.setItem('sf_script', JSON.stringify(scriptLines));
   renderScript();
-}
-
-function saveScriptData() {
-  localStorage.setItem('demoScript', JSON.stringify(scriptLines));
 }
 
 function loadSampleScript() {
   scriptLines = [
     { type: 'scene', content: 'INT. NHÀ HÀNG SANG TRỌNG - NGÀY' },
-    { type: 'action', content: 'LÂM (28t, mặc suit rẻ tiền, mặt căng thẳng) ngồi đối diện MẸ CHỒNG (50t, toàn bộ trang sức đắt giá, mặt khinh bỉ).' },
+    { type: 'action', content: 'LÂM (28t, mặc suit rẻ tiền, mặt căng thẳng) ngồi đối diện MẸ CHỒNG (50t, toàn bộ trang sức đắt giá, mặt khinh bỉ). Không gian nhà hàng lộng lẫy, khách hàng xung quanh ăn nói trang nhã.' },
     { type: 'character', content: 'MẸ CHỒNG' },
-    { type: 'paren', content: '(lạnh lùng)' },
+    { type: 'parenthetical', content: '(lạnh lùng, cười khinh)' },
     { type: 'dialogue', content: 'Cậu nghĩ cậu xứng đáng với con gái tôi sao? Tiền bạc cậu có được không bằng một chiếc túi của tôi.' },
-    { type: 'action', content: 'Mẹ chồng ném một tấm séc 500.000 nhân dân tệ xuống bàn. Khách hàng xung quanh quay nhìn.' },
+    { type: 'action', content: 'Mẹ chồng ném một tấm séc 500.000 nhân dân tệ xuống bàn. Tiếng séc rơi vang vọng. Một vài khách hàng xung quanh quay nhìn lạ.' },
     { type: 'character', content: 'LÂM' },
-    { type: 'paren', content: '(cười lạnh)' },
+    { type: 'parenthetical', content: '(cười lạnh, mắt sáng ngời)' },
     { type: 'dialogue', content: 'Bà nghĩ tiền có thể mua được tất cả ư?' },
     { type: 'transition', content: 'CUT TO:' },
     { type: 'scene', content: 'EXT. NHÀ HÀNG - LIÊN TỤC' },
-    { type: 'action', content: 'Một dãy xe sang đỗ trước cửa. TẤT CẢ GIÁM ĐỐC CÔNG TY LÂM (30t, khí chất vua chúa) bước xuống, đón Lâm ra với cung kính.' },
+    { type: 'action', content: 'Một dãy xe sang đỗ trước cửa. TẤT CẢ GIÁM ĐỐC CÔNG TY (30t, khí chất vua chúa) bước xuống, đón Lâm ra với cung kính. Nhân viên nhà hàng há hốc mồm.' },
     { type: 'character', content: 'TẤT CẢ GIÁM ĐỐC' },
+    { type: 'parenthetical', content: '(cùng nói, cung kính)' },
     { type: 'dialogue', content: 'Chào Tổng giám đốc!' },
-    { type: 'action', content: 'Mẹ chồng trong nhà há hốc mồm, không thể tin vào mắt mình.' },
+    { type: 'action', content: 'Mẹ chồng trong nhà há hốc mồm, không thể tin vào mắt mình. Tấm séc trên bàn trở nên nhỏ bé và vô nghĩa.' },
     { type: 'transition', content: 'FADE OUT.' }
   ];
-  saveScriptData();
+  localStorage.setItem('sf_script', JSON.stringify(scriptLines));
   renderScript();
+  showToast('Đã tải mẫu kịch bản phim ngắn!', 'success');
 }
 
 function exportScript() {
-  const data = { lines: scriptLines, exportedAt: new Date().toISOString() };
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'script_' + Date.now() + '.json';
-  a.click();
+  const data = { type: 'script', lines: scriptLines, exportedAt: new Date().toISOString() };
+  downloadJSON(data, 'script_' + Date.now() + '.json');
 }
 
 function printScript() {
-  const styles = {
+  if (scriptLines.length === 0) { showToast('Kịch bản trống!', 'error'); return; }
+  const classes = {
     scene: 'font-weight:700;text-transform:uppercase;margin:16px 0 8px',
     action: 'margin:8px 0',
     character: 'text-align:center;text-transform:uppercase;margin:12px 0 4px;font-weight:600',
     dialogue: 'margin:0 80px',
-    paren: 'margin:0 120px;font-style:italic;color:#666',
+    parenthetical: 'margin:0 120px;font-style:italic;color:#666',
     transition: 'text-align:right;text-transform:uppercase;margin:12px 0'
   };
-  const html = scriptLines.map(l => `<div style="${styles[l.type] || ''}">${escapeHtml(l.content)}</div>`).join('');
+  const html = scriptLines.map(l => `<div style="${classes[l.type] || ''}">${escapeHtml(l.content)}</div>`).join('');
   const w = window.open('', '_blank');
   w.document.write(`<html><head><title>Kịch bản</title><style>body{font-family:'Courier New',monospace;font-size:14px;line-height:1.6;padding:40px;max-width:800px;margin:0 auto}</style></head><body>${html}</body></html>`);
   w.document.close();
-  w.print();
+  setTimeout(() => w.print(), 250);
 }
 
 function clearScript() {
+  if (scriptLines.length === 0) return;
   if (confirm('Xóa toàn bộ kịch bản?')) {
     scriptLines = [];
-    saveScriptData();
+    localStorage.setItem('sf_script', '[]');
     renderScript();
+    showToast('Đã xóa kịch bản', 'success');
   }
 }
 
-function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
+// ============================================================
+// AI SCRIPT SUGGESTION
+// ============================================================
+async function aiSuggestScript() {
+  const btn = document.getElementById('aiSuggestBtn');
+  const resultDiv = document.getElementById('aiSuggestResult');
+  const type = document.getElementById('aiSuggestType').value;
+  const context = document.getElementById('aiContext').value.trim();
+  
+  const lastLines = scriptLines.slice(-5).map(l => l.content).join('\n');
+  const prompts = {
+    next_scene: `Dựa trên kịch bản phim ngắn này:\n${lastLines}\n\n${context ? 'Bối cảnh thêm: ' + context + '\n' : ''}Viết tiếp cảnh tiếp theo theo công thức phim ngắn Trung Quốc (có xung đột, cảm xúc mạnh). Định dạng chuẩn điện ảnh.`,
+    dialogue: `Viết đoạn thoại cho nhân vật trong bối cảnh: ${context || 'tension-filled confrontation'}. Phong cách phim ngắn Trung Quốc: ngắn gọn, mạnh mẽ, có cảm xúc.`,
+    conflict: `Làm tăng xung đột cho đoạn kịch bản này:\n${lastLines}\n\nThêm một sự kiện hoặc lời nói khiến tình thế trở nên căng thẳng hơn.`,
+    twist: `Đề xuất một cú ngoặt kịch tính (plot twist) cho đoạn kịch bản này:\n${lastLines}\n\nCú ngoặt phải thay đổi hoàn toàn cách người xem hiểu câu chuyện.`,
+    cliffhanger: `Viết một đoạn kết thúc tập (cliffhanger) cho kịch bản phim ngắn. Dựa trên bối cảnh: ${context || 'mối quan hệ căng thẳng giữa hai nhân vật chính'}. Kết thúc với một câu hỏi chưa trả lời hoặc một cú sốc khiến người xem phải xem tập tiếp theo.`
+  };
+  
+  btn.innerHTML = '<span class="spinner"></span> Đang suy nghĩ...';
+  btn.disabled = true;
+  resultDiv.style.display = 'block';
+  resultDiv.textContent = 'Đang gọi AI...';
+  
+  try {
+    // Dùng Pollinations để tạo text prompt, hoặc dùng Gemini nếu có key
+    let suggestion = '';
+    
+    if (API_KEYS.gemini) {
+      // Gọi Gemini API nếu có key
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEYS.gemini}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompts[type] }] }],
+            generationConfig: { temperature: 0.8, maxOutputTokens: 500 }
+          })
+        }
+      );
+      if (!response.ok) throw new Error('API Error ' + response.status);
+      const data = await response.json();
+      suggestion = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Không có gợi ý';
+    } else {
+      // Fallback: gợi ý mẫu dựa trên loại
+      const templates = {
+        next_scene: `[GỢI Ý CẢNH TIẾP THEO - Cần API key Gemini để gợi ý thông minh hơn]\n\nĐỀ XUẤT: Mẹ chồng cầm ly nước tạt thẳng vào mặt Lâm. Lâm không hề nao núng, chỉ lau mặt nhẹ nhàng và cười. Anh rút điện thoại ra, gọi một số, và nói một câu khiến mọi người xung quanh đóng băng:\n\nLÂM\nGửi đoàn xe đón tôi đến bây giờ.`,
+        dialogue: `[GỢI Ý THOẠI - Cần API key Gemini để gợi ý thông minh hơn]\n\nMẸ CHỒNG\nĐừng mơ tưởng! Con gái tôi sẽ không bao giờ theo một kẻ nghèo như cậu!\n\nLÂM\n(cười lạnh)\nBà sẽ hối hận về những lời vừa nói.`,
+        conflict: `[GỢI Ý TĂNG XUNG ĐỘT - Cần API key Gemini]\n\nĐỀ XUẤT: Con gái của mẹ chồng - TÚ - đột nhiên bước đến, đứng về phía Lâm. Cô đối mặt trực diện với mẹ mình.\n\nTÚ\nMẹ đừng nói quá!\n\nMẸ CHỒNG\n(bất ngờ)\nCon... con đứng về phía hắn?`,
+        twist: `[GỢI Ý CÚ NGOẶT - Cần API key Gemini]\n\nĐỀ XUẤT: Lâm không phải là người nghèo mà mẹ chồng tưởng. Anh là người thừa kế duy nhất của tập đoàn công nghệ lớn nhất nước. Tất cả những gì xảy ra chỉ là bài thử tình của Lâm đối với gia đình cô dâu.\n\nLÂM\n(mỉm cười)\nBà thử tôi xong rồi. Bây giờ đến lượt tôi thử bà.`,
+        cliffhanger: `[GỢI Ý CLIFFHANGER - Cần API key Gemini]\n\nĐỀ XUẤT: Cửa nhà hàng đột nhiên mở to. Một người phụ nữ cao quý bước vào, theo sau là hàng loạt vệ binh. Cô thẳng thắn đi đến Lâm, cúi nhẹ người.\n\nNGƯỜI PHỤ NỮ\nChào Tổng giám đốc. Xe đã đợi sẵn.\n\nMẹ chồng há hốc mồm. Màn hình đen.\n\n👉 ĐỂ BIẾT TIẾP THEO, XEM TẬP SAU!`
+      };
+      suggestion = templates[type];
+    }
+    
+    resultDiv.innerHTML = `<div style="white-space:pre-wrap;color:var(--text);line-height:1.7">${escapeHtml(suggestion)}</div>
+      <button class="btn btn-secondary" style="margin-top:10px;font-size:11px" onclick="appendSuggestionToScript(\`${suggestion.replace(/`/g, '\\`').replace(/\n/g, '\\n')}\`)">+ Thêm vào kịch bản</button>`;
+    
+  } catch (err) {
+    resultDiv.innerHTML = `<span style="color:var(--danger)">❌ Lỗi: ${err.message}</span>`;
+  } finally {
+    btn.innerHTML = '✨ AI Gợi ý kịch bản';
+    btn.disabled = false;
+  }
 }
 
-// ===== SHOT LIST =====
-let shots = JSON.parse(localStorage.getItem('demoShots') || '[]');
+function appendSuggestionToScript(text) {
+  // Tách thành các dòng action đơn giản
+  text.split('\n').filter(l => l.trim()).forEach(line => {
+    scriptLines.push({ type: 'action', content: line });
+  });
+  localStorage.setItem('sf_script', JSON.stringify(scriptLines));
+  renderScript();
+  showToast('Đã thêm gợi ý vào kịch bản!', 'success');
+}
 
+// ============================================================
+// SHOT LIST
+// ============================================================
 function renderShots() {
   const tbody = document.getElementById('shotTableBody');
-  document.getElementById('shotCount').textContent = shots.length + ' shots';
+  document.getElementById('shotCount').textContent = shots.length;
   
   if (shots.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="8" style="color:var(--muted);text-align:center;padding:40px">Chưa có shot nào</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state" style="padding:30px">Chưa có shot nào</div></td></tr>';
     return;
   }
   
   tbody.innerHTML = shots.map((s, i) => `
-    <tr class="shot-row" style="border-bottom:1px solid var(--border)">
-      <td class="py-2 font-medium">${escapeHtml(s.scene)}</td>
-      <td class="py-2">${escapeHtml(s.num)}</td>
-      <td class="py-2"><span class="pill" style="background:var(--accent-soft);color:var(--text)">${escapeHtml(s.type)}</span></td>
-      <td class="py-2">${escapeHtml(s.angle)}</td>
-      <td class="py-2">${escapeHtml(s.move)}</td>
-      <td class="py-2" style="max-width:200px">${escapeHtml(s.desc)}</td>
-      <td class="py-2" style="color:var(--muted)">${escapeHtml(s.note)}</td>
-      <td class="py-2"><button class="btn-ghost" onclick="deleteShot(${i})" style="color:#dc2626">✕</button></td>
+    <tr>
+      <td style="font-weight:600">${escapeHtml(s.scene)}</td>
+      <td>${escapeHtml(s.num)}</td>
+      <td><span class="pill">${escapeHtml(s.type)}</span></td>
+      <td>${escapeHtml(s.angle)}</td>
+      <td>${escapeHtml(s.move)}</td>
+      <td style="max-width:250px">${escapeHtml(s.desc)}</td>
+      <td style="color:var(--muted);font-size:12px">${escapeHtml(s.note)}</td>
+      <td><button class="btn btn-danger" onclick="deleteShot(${i})">✕</button></td>
     </tr>
   `).join('');
 }
 
 function addShot() {
   const shot = {
-    scene: document.getElementById('shotScene').value,
-    num: document.getElementById('shotNum').value,
+    scene: document.getElementById('shotScene').value.trim(),
+    num: document.getElementById('shotNum').value.trim(),
     type: document.getElementById('shotType').value,
     angle: document.getElementById('shotAngle').value,
     move: document.getElementById('shotMove').value,
-    desc: document.getElementById('shotDesc').value,
-    note: document.getElementById('shotNote').value
+    desc: document.getElementById('shotDesc').value.trim(),
+    note: document.getElementById('shotNote').value.trim()
   };
-  if (!shot.scene || !shot.num) { alert('Vui lòng điền Scene # và Shot #'); return; }
+  if (!shot.scene || !shot.num) { showToast('Vui lòng điền Scene # và Shot #', 'error'); return; }
   shots.push(shot);
-  localStorage.setItem('demoShots', JSON.stringify(shots));
+  localStorage.setItem('sf_shots', JSON.stringify(shots));
   renderShots();
   ['shotScene','shotNum','shotDesc','shotNote'].forEach(id => document.getElementById(id).value = '');
+  showToast('Đã thêm shot!', 'success');
 }
 
 function deleteShot(i) {
   shots.splice(i, 1);
-  localStorage.setItem('demoShots', JSON.stringify(shots));
+  localStorage.setItem('sf_shots', JSON.stringify(shots));
   renderShots();
 }
 
-function exportShots() {
-  let csv = 'Scene,Shot,Type,Angle,Move,Description,Note\n';
+function clearShots() {
+  if (shots.length === 0) return;
+  if (confirm('Xóa toàn bộ shot list?')) {
+    shots = [];
+    localStorage.setItem('sf_shots', '[]');
+    renderShots();
+    showToast('Đã xóa shot list', 'success');
+  }
+}
+
+function exportShotsCSV() {
+  if (shots.length === 0) { showToast('Shot list trống!', 'error'); return; }
+  let csv = 'Scene,Shot,Type,Angle,Movement,Description,Note\n';
   shots.forEach(s => {
-    csv += `"${s.scene}","${s.num}","${s.type}","${s.angle}","${s.move}","${s.desc.replace(/"/g,'""')}","${s.note.replace(/"/g,'""')}"\n`;
+    csv += `"${s.scene}","${s.num}","${s.type}","${s.angle}","${s.move}","${(s.desc||'').replace(/"/g,'""')}","${(s.note||'').replace(/"/g,'""')}"\n`;
   });
-  const blob = new Blob(['\ufeff' + csv], {type: 'text/csv;charset=utf-8'});
+  const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url; a.download = 'shotlist_' + Date.now() + '.csv';
   a.click();
+  showToast('Đã xuất CSV!', 'success');
 }
 
-// ===== STORYBOARD =====
-let storyPanels = JSON.parse(localStorage.getItem('demoStoryboard') || '[]');
-let panelCounter = 0;
+function convertToStoryboard() {
+  if (shots.length === 0) { showToast('Shot list trống!', 'error'); return; }
+  if (storyPanels.length > 0 && !confirm(`Storyboard hiện có ${storyPanels.length} panel. Thêm ${shots.length} panel từ shot list?`)) return;
+  
+  shots.forEach(s => {
+    storyPanels.push({
+      shot: `${s.scene}-${s.num} | ${s.type} | ${s.angle} | ${s.move}`,
+      action: s.desc,
+      dialogue: s.note,
+      image: ''
+    });
+  });
+  
+  saveStoryboard();
+  renderStoryboard();
+  switchTab('storyboard');
+  showToast(`Đã thêm ${shots.length} panel vào storyboard!`, 'success');
+}
 
+// ============================================================
+// STORYBOARD
+// ============================================================
 function renderStoryboard() {
   const grid = document.getElementById('storyboardGrid');
   
   if (storyPanels.length === 0) {
-    grid.innerHTML = '<div class="p-4 rounded-xl text-center" style="background:var(--bg);border:2px dashed var(--border);padding:40px;color:var(--muted)">Chưa có ô nào. Nhấn "+ Thêm ô" để bắt đầu tạo storyboard.</div>';
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1">Chưa có panel nào.<br><br><button class="btn btn-secondary" onclick="addStoryboardPanel()">+ Thêm ô đầu tiên</button><span style="margin:0 12px;color:var(--muted)">hoặc</span><button class="btn btn-secondary" onclick="switchTab(\'shot\')">🎬 Tạo từ Shot List</button></div>';
     return;
   }
   
   grid.innerHTML = storyPanels.map((p, i) => `
-    <div class="p-4 rounded-xl" style="background:var(--bg);border:1px solid var(--border)">
-      <div class="flex items-center justify-between mb-3">
-        <span class="pill" style="background:var(--accent2-soft);color:var(--text)">Panel ${i+1}</span>
-        <button class="btn-ghost" onclick="deletePanel(${i})" style="color:#dc2626">✕</button>
+    <div class="story-panel">
+      <div class="panel-header">
+        <span class="panel-num">Panel ${i + 1}</span>
+        <button class="btn btn-danger" onclick="deletePanel(${i})">✕</button>
       </div>
-      <div style="aspect-ratio:16/9;background:var(--card);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;overflow:hidden" id="panelImg_${i}">
-        ${p.image ? `<img src="${p.image}" style="width:100%;height:100%;object-fit:cover">` : `<span style="color:var(--muted);font-size:12px">Chưa có ảnh</span>`}
+      <div class="panel-image" id="panelImg_${i}">
+        ${p.image 
+          ? `<img src="${p.image}" alt="Panel ${i+1}">` 
+          : `<div class="panel-image-placeholder">Chưa có ảnh<br><span style="font-size:10px">Upload hoặc dùng AI tạo</span></div>`}
       </div>
       <input type="file" accept="image/*" onchange="uploadPanelImage(${i}, event)" style="font-size:11px;padding:4px;margin-bottom:8px">
-      <input type="text" placeholder="Shot # / Loại shot" value="${escapeHtml(p.shot || '')}" onchange="updatePanel(${i},'shot',this.value)" style="margin-bottom:6px;font-size:12px">
-      <textarea placeholder="Mô tả hành động..." onchange="updatePanel(${i},'action',this.value)" style="margin-bottom:6px;font-size:12px;min-height:50px">${escapeHtml(p.action || '')}</textarea>
-      <input type="text" placeholder="Thoại / Ghi chú..." value="${escapeHtml(p.dialogue || '')}" onchange="updatePanel(${i},'dialogue',this.value)" style="font-size:12px">
+      <input type="text" placeholder="Shot info (VD: 1A-1 | CU | Eye level)" value="${escapeHtml(p.shot || '')}" onchange="updatePanel(${i},'shot',this.value)" style="margin-bottom:8px;font-size:12px">
+      <textarea placeholder="Mô tả hành động..." onchange="updatePanel(${i},'action',this.value)" style="margin-bottom:8px;font-size:12px;min-height:60px">${escapeHtml(p.action || '')}</textarea>
+      <input type="text" placeholder="Thoại / Ghi chú..." value="${escapeHtml(p.dialogue || '')}" onchange="updatePanel(${i},'dialogue',this.value)" style="font-size:12px;margin-bottom:8px">
+      <button class="btn btn-ai" id="genBtn_${i}" onclick="generatePanelImage(${i})">✨ AI Tạo ảnh</button>
     </div>
   `).join('');
 }
@@ -653,31 +1135,283 @@ function uploadPanelImage(i, event) {
     storyPanels[i].image = e.target.result;
     saveStoryboard();
     renderStoryboard();
+    showToast('Đã upload ảnh!', 'success');
   };
   reader.readAsDataURL(file);
 }
 
 function saveStoryboard() {
-  localStorage.setItem('demoStoryboard', JSON.stringify(storyPanels));
+  localStorage.setItem('sf_storyboard', JSON.stringify(storyPanels));
 }
 
-function exportStoryboard() {
-  alert('Tính năng xuất storyboard: Dùng Ctrl+P để in thành PDF, hoặc nâng cấp code để xuất HTML/PNG');
+function printStoryboard() {
+  if (storyPanels.length === 0) { showToast('Storyboard trống!', 'error'); return; }
+  const panelsHtml = storyPanels.map((p, i) => `
+    <div style="page-break-inside:avoid;margin-bottom:30px;border:1px solid #ccc;padding:15px;border-radius:8px">
+      <div style="font-weight:700;margin-bottom:10px;color:#c47046">Panel ${i + 1} ${p.shot ? '| ' + p.shot : ''}</div>
+      ${p.image 
+        ? `<img src="${p.image}" style="width:100%;max-height:400px;object-fit:contain;border-radius:6px;margin-bottom:10px">` 
+        : `<div style="width:100%;height:250px;background:#f5f5f5;border:2px dashed #ccc;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#999;margin-bottom:10px">[Không có ảnh]</div>`}
+      <div style="margin-top:10px"><strong>Hành động:</strong> ${escapeHtml(p.action || '')}</div>
+      ${p.dialogue ? `<div style="margin-top:6px"><strong>Thoại/Ghi chú:</strong> ${escapeHtml(p.dialogue)}</div>` : ''}
+    </div>
+  `).join('');
+  
+  const w = window.open('', '_blank');
+  w.document.write(`<html><head><title>Storyboard</title><style>body{font-family:Arial,sans-serif;padding:30px;max-width:900px;margin:0 auto}h1{color:#c47046}</style></head><body><h1>🎨 Storyboard</h1>${panelsHtml}</body></html>`);
+  w.document.close();
+  setTimeout(() => w.print(), 250);
 }
 
-// ===== TEMPLATE COPY =====
-function copyTemplate() {
-  const code = document.getElementById('templateCode').textContent;
-  navigator.clipboard.writeText(code).then(() => {
-    alert('Đã copy code template! Dán vào file index.html rồi upload lên GitHub.');
-  }).catch(() => {
-    alert('Copy không được. Hãy chọn thủ công và copy.');
+// ============================================================
+// AI IMAGE GENERATION
+// ============================================================
+function setProvider(provider) {
+  currentProvider = provider;
+  localStorage.setItem('sf_provider', provider);
+  document.querySelectorAll('.provider-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.provider === provider);
   });
+  document.getElementById('hfModelDiv').style.display = provider === 'huggingface' ? 'block' : 'none';
+  
+  const notes = {
+    pollinations: '<strong>🌼 Pollinations.ai:</strong> Miễn phí 100%, không cần API key, tạo ảnh nhanh. Phù hợp cho người mới bắt đầu và phác thảo storyboard.',
+    gemini: `<strong>🔮 Google Gemini / Imagen 3:</strong> Chất lượng cao, hiểu ngữ cảnh tốt. Cần API key đã lưu trong Cài đặt AI. Chi phí khoảng $0.03/ảnh.`,
+    huggingface: `<strong>🤗 Hugging Face:</strong> Đa dạng model ảnh. Cần token đã lưu trong Cài đặt AI. Chọn model bên dưới.`
+  };
+  document.getElementById('providerNote').innerHTML = notes[provider];
 }
 
-// ===== INIT =====
-renderScript();
-renderShots();
-renderStoryboard();
+function buildPrompt(panel) {
+  const parts = [];
+  parts.push('Cinematic film storyboard panel');
+  if (panel.shot) parts.push(panel.shot);
+  if (panel.action) parts.push(panel.action);
+  parts.push('Professional composition, clear visual storytelling');
+  parts.push('Aspect ratio 16:9');
+  parts.push('Movie lighting, dramatic atmosphere');
+  return parts.join('. ');
+}
+
+async function generatePanelImage(panelIndex) {
+  const panel = storyPanels[panelIndex];
+  if (!panel.action && !panel.shot) {
+    showToast('Nhập mô tả hành động hoặc shot info trước!', 'error');
+    return;
+  }
+  
+  const btn = document.getElementById('genBtn_' + panelIndex);
+  btn.innerHTML = '<span class="spinner"></span> Đang tạo...';
+  btn.disabled = true;
+  
+  const prompt = buildPrompt(panel);
+  const imageData = await generateImage(prompt, panelIndex);
+  
+  if (imageData) {
+    storyPanels[panelIndex].image = imageData;
+    saveStoryboard();
+    renderStoryboard();
+    showToast(`Panel ${panelIndex + 1}: Đã tạo ảnh!`, 'success');
+  } else {
+    btn.innerHTML = '✨ AI Tạo ảnh';
+    btn.disabled = false;
+  }
+}
+
+async function generateImage(prompt, panelIndex = -1) {
+  try {
+    if (currentProvider === 'pollinations') {
+      // Pollinations.ai - miễn phí, không cần key
+      const encodedPrompt = encodeURIComponent(prompt);
+      const seed = Date.now() + Math.floor(Math.random() * 1000);
+      const url = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=800&height=450&seed=${seed}&nologo=true&enhance=true`;
+      
+      // Kiểm tra xem ảnh có tải được không
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          // Convert sang base64 để lưu
+          try {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            canvas.getContext('2d').drawImage(img, 0, 0);
+            resolve(canvas.toDataURL('image/jpeg', 0.85));
+          } catch (e) {
+            // CORS issue: trả về URL trực tiếp (không lưu được vào localStorage dài hạn nhưng hiển thị được)
+            resolve(url);
+          }
+        };
+        img.onerror = () => reject(new Error('Không thể tải ảnh từ Pollinations'));
+        img.src = url;
+      });
+      
+    } else if (currentProvider === 'gemini') {
+      if (!API_KEYS.gemini) { showToast('Nhập Google Gemini API Key trong Cài đặt AI!', 'error'); return null; }
+      
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:generateImages?key=${API_KEYS.gemini}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            instances: [{ prompt: prompt }],
+            parameters: { sampleCount: 1, aspectRatio: "16:9" }
+          })
+        }
+      );
+      
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        throw new Error(err.error?.message || `HTTP ${response.status}`);
+      }
+      
+      const data = await response.json();
+      let base64 = null;
+      if (data.predictions?.[0]?.bytesBase64Encoded) base64 = data.predictions[0].bytesBase64Encoded;
+      else if (data.generatedImages?.[0]?.image?.bytesBase64Encoded) base64 = data.generatedImages[0].image.bytesBase64Encoded;
+      
+      if (!base64) throw new Error('API không trả về ảnh');
+      return 'data:image/png;base64,' + base64;
+      
+    } else if (currentProvider === 'huggingface') {
+      if (!API_KEYS.hf) { showToast('Nhập Hugging Face token trong Cài đặt AI!', 'error'); return null; }
+      
+      const modelId = document.getElementById('hfModel').value;
+      const response = await fetch(
+        `https://api-inference.huggingface.co/models/${modelId}`,
+        {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${API_KEYS.hf}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ inputs: prompt })
+        }
+      );
+      
+      if (!response.ok) throw new Error(`HTTP ${response.status} - Kiểm tra token hoặc model có đang tải không`);
+      
+      const blob = await response.blob();
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
+    }
+    
+  } catch (err) {
+    showToast('Lỗi tạo ảnh: ' + err.message, 'error');
+    return null;
+  }
+}
+
+async function generateAllStoryboard() {
+  if (storyPanels.length === 0) { showToast('Thêm panel trước!', 'error'); return; }
+  
+  const emptyPanels = storyPanels.filter(p => !p.image);
+  if (emptyPanels.length === 0) { showToast('Tất cả panel đã có ảnh!', 'info'); return; }
+  
+  if (!confirm(`Tạo ảnh cho ${emptyPanels.length} panel?\nQuá trình này có thể mất vài phút.`)) return;
+  
+  const genAllBtn = document.getElementById('genAllBtn');
+  genAllBtn.innerHTML = '<span class="spinner"></span> Đang tạo...';
+  genAllBtn.disabled = true;
+  
+  let successCount = 0;
+  
+  for (let i = 0; i < storyPanels.length; i++) {
+    if (storyPanels[i].image) continue;
+    
+    showToast(`Đang tạo panel ${i + 1}/${storyPanels.length}...`, 'info');
+    
+    const prompt = buildPrompt(storyPanels[i]);
+    const imageData = await generateImage(prompt, i);
+    
+    if (imageData) {
+      storyPanels[i].image = imageData;
+      saveStoryboard();
+      renderStoryboard();
+      successCount++;
+    }
+    
+    // Delay giữa các yêu cầu
+    if (i < storyPanels.length - 1) {
+      await new Promise(r => setTimeout(r, currentProvider === 'pollinations' ? 500 : 1500));
+    }
+  }
+  
+  genAllBtn.innerHTML = '✨ AI Tạo toàn bộ';
+  genAllBtn.disabled = false;
+  showToast(`Đã tạo xong ${successCount}/${emptyPanels.length} panel!`, 'success');
+}
+
+// ============================================================
+// IMPORT / EXPORT ALL DATA
+// ============================================================
+function downloadJSON(data, filename) {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function exportAllData() {
+  const data = {
+    script: scriptLines,
+    shots: shots,
+    storyboard: storyPanels,
+    exportedAt: new Date().toISOString(),
+    app: 'ScriptForge'
+  };
+  downloadJSON(data, 'scriptforge_backup_' + Date.now() + '.json');
+  showToast('Đã backup toàn bộ dữ liệu!', 'success');
+}
+
+function importAllData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (data.script) { scriptLines = data.script; localStorage.setItem('sf_script', JSON.stringify(scriptLines)); renderScript(); }
+      if (data.shots) { shots = data.shots; localStorage.setItem('sf_shots', JSON.stringify(shots)); renderShots(); }
+      if (data.storyboard) { storyPanels = data.storyboard; saveStoryboard(); renderStoryboard(); }
+      showToast('Đã khôi phục dữ liệu!', 'success');
+    } catch (err) {
+      showToast('File không hợp lệ!', 'error');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+// ============================================================
+// INITIALIZATION
+// ============================================================
+window.addEventListener('load', () => {
+  // Load API keys vào form
+  if (API_KEYS.gemini) document.getElementById('geminiApiKey').value = API_KEYS.gemini;
+  if (API_KEYS.hf) document.getElementById('hfToken').value = API_KEYS.hf;
+  
+  // Set provider
+  setProvider(currentProvider);
+  
+  // Render all
+  renderScript();
+  renderShots();
+  renderStoryboard();
+});
+
+// Đóng modal khi click bên ngoài
+document.getElementById('apiSettingsModal').addEventListener('click', (e) => {
+  if (e.target.id === 'apiSettingsModal') {
+    e.target.style.display = 'none';
+  }
+});
 </script>
+
+</body>
 </html>
