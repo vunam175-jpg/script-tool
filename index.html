@@ -1,0 +1,683 @@
+<html style="margin:0;padding:0;">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+(function(){
+  var s = document.createElement('style');
+  s.textContent = ':root{--bg:#202024;--card:#2a2a2f;--text:#e8e5df;--muted:#9a978f;--accent:#c47046;--accent-soft:rgba(196,112,70,.14);--accent2:#7ba8b8;--accent2-soft:rgba(123,168,184,.14);--border:rgba(232,229,223,.12)}.reveal{opacity:0;transform:translateY(20px);animation:fadeUp .6s ease forwards}.reveal:nth-child(2){animation-delay:.1s}.reveal:nth-child(3){animation-delay:.2s}.reveal:nth-child(4){animation-delay:.3s}@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}.tool-card{transition:all .25s ease}.tool-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(196,112,70,.15)}.tab-btn{transition:all .2s ease}.tab-btn.active{background:var(--accent-soft);color:var(--text);border-bottom:2px solid var(--accent)}.tab-content{display:none}.tab-content.active{display:block}.script-line{transition:background .15s ease}.script-line:hover{background:rgba(196,112,70,.06)}.shot-row{transition:background .15s ease}.shot-row:hover{background:rgba(123,168,184,.08)}input,textarea,select{background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:8px 12px;width:100%;font-size:13px;transition:border-color .15s}input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent)}textarea{resize:vertical;min-height:80px;line-height:1.6}label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;margin-bottom:4px;display:block}.btn-primary{background:var(--accent);color:var(--bg);border:none;padding:10px 20px;border-radius:8px;font-weight:600;cursor:pointer;transition:opacity .15s}.btn-primary:hover{opacity:.9}.btn-secondary{background:var(--card);color:var(--text);border:1px solid var(--border);padding:8px 16px;border-radius:8px;font-weight:500;cursor:pointer;transition:border-color .15s;font-size:13px}.btn-secondary:hover{border-color:var(--accent)}.btn-ghost{background:transparent;color:var(--muted);border:none;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;transition:color .15s}.btn-ghost:hover{color:var(--accent)}.pill{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600}.code-block{background:#1a1a1d;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:monospace;font-size:12px;color:var(--muted);overflow-x:auto;line-height:1.6}';
+  document.head.appendChild(s);
+})();
+</script>
+<div style="background-color:transparent;box-sizing:border-box;">
+  <div style="color:var(--text);font-family:'Sora',sans-serif;background:radial-gradient(1000px 500px at 80% -10%, var(--accent-soft), transparent 60%), var(--bg)">
+    <div class="max-w-6xl mx-auto px-6 py-12">
+
+      <!-- HERO -->
+      <div class="reveal mb-12">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+          <div style="width:44px;height:44px;border-radius:12px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          </div>
+          <div>
+            <p style="font-family:monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted)">Open Source · Free Forever</p>
+            <h1 class="text-4xl font-bold" style="color:var(--text);letter-spacing:-0.02em;line-height:1.15">
+              Tự tạo tool kịch bản trên <span style="background:linear-gradient(100deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent">GitHub</span>
+            </h1>
+          </div>
+        </div>
+        <p style="color:var(--muted);max-width:700px;line-height:1.7" class="text-base mt-3">
+          Hoàn toàn MIỄN PHÍ với GitHub Pages. Xây dựng bằng HTML/CSS/JS thuần, lưu dữ liệu trên trình duyệt (localStorage), không cần server, không cần database. Dưới đây là hướng dẫn + tool demo hoạt động được.
+        </p>
+      </div>
+
+      <!-- TABS -->
+      <div class="reveal mb-8">
+        <div class="flex flex-wrap gap-1 mb-6 border-b" style="border-color:var(--border)">
+          <button class="tab-btn active px-4 py-2 text-sm font-medium rounded-t-lg" onclick="switchTab(event,'guide')" style="color:var(--muted);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer">Hướng dẫn GitHub</button>
+          <button class="tab-btn px-4 py-2 text-sm font-medium rounded-t-lg" onclick="switchTab(event,'demo-script')" style="color:var(--muted);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer">Demo: Viết kịch bản</button>
+          <button class="tab-btn px-4 py-2 text-sm font-medium rounded-t-lg" onclick="switchTab(event,'demo-shot')" style="color:var(--muted);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer">Demo: Shot List</button>
+          <button class="tab-btn px-4 py-2 text-sm font-medium rounded-t-lg" onclick="switchTab(event,'demo-story')" style="color:var(--muted);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer">Demo: Storyboard</button>
+          <button class="tab-btn px-4 py-2 text-sm font-medium rounded-t-lg" onclick="switchTab(event,'template')" style="color:var(--muted);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer">Code template</button>
+        </div>
+
+        <!-- TAB: GUIDE -->
+        <div id="tab-guide" class="tab-content active">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+              <div class="tool-card p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border)">
+                <div class="flex items-center gap-3 mb-3">
+                  <div style="width:36px;height:36px;border-radius:10px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700">1</div>
+                  <h3 class="font-semibold" style="color:var(--text)">Tạo repo GitHub</h3>
+                </div>
+                <ol class="text-sm space-y-1.5" style="color:var(--muted);line-height:1.7;padding-left:20px">
+                  <li>Đăng nhập GitHub → New repository</li>
+                  <li>Đặt tên: <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-size:12px;color:var(--accent)">script-tool</code></li>
+                  <li>Chọn Public → Add README → Create</li>
+                </ol>
+              </div>
+
+              <div class="tool-card p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border)">
+                <div class="flex items-center gap-3 mb-3">
+                  <div style="width:36px;height:36px;border-radius:10px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700">2</div>
+                  <h3 class="font-semibold" style="color:var(--text)">Upload file HTML</h3>
+                </div>
+                <ol class="text-sm space-y-1.5" style="color:var(--muted);line-height:1.7;padding-left:20px">
+                  <li>Trong repo → Add file → Upload files</li>
+                  <li>Tải file <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-size:12px;color:var(--accent)">index.html</code> (copy code từ tab "Code template")</li>
+                  <li>Commit changes</li>
+                </ol>
+              </div>
+
+              <div class="tool-card p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border)">
+                <div class="flex items-center gap-3 mb-3">
+                  <div style="width:36px;height:36px;border-radius:10px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700">3</div>
+                  <h3 class="font-semibold" style="color:var(--text)">Bật GitHub Pages</h3>
+                </div>
+                <ol class="text-sm space-y-1.5" style="color:var(--muted);line-height:1.7;padding-left:20px">
+                  <li>Settings → Pages (ở sidebar trái)</li>
+                  <li>Source: chọn <strong>Deploy from a branch</strong></li>
+                  <li>Branch: <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-size:12px">main</code> / <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-size:12px">/root</code></li>
+                  <li>Save → đợi 1-2 phút</li>
+                  <li>Truy cập: <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-size:12px;color:var(--accent)">https://[username].github.io/script-tool</code></li>
+                </ol>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              <div class="tool-card p-5 rounded-xl" style="background:linear-gradient(135deg,var(--accent-soft),var(--accent2-soft));border:1px solid var(--border)">
+                <h3 class="font-semibold mb-3" style="color:var(--text)">Những gì có thể làm miễn phí</h3>
+                <div class="grid grid-cols-2 gap-3 text-sm">
+                  <div class="p-3 rounded-lg" style="background:var(--card);border:1px solid var(--border)">
+                    <div style="color:var(--accent);font-weight:700;margin-bottom:4px">✓ Viết kịch bản</div>
+                    <p style="color:var(--muted);font-size:12px">Định dạng tự động Scene Heading, Action, Character, Dialogue, Parenthetical</p>
+                  </div>
+                  <div class="p-3 rounded-lg" style="background:var(--card);border:1px solid var(--border)">
+                    <div style="color:var(--accent);font-weight:700;margin-bottom:4px">✓ Lên shot list</div>
+                    <p style="color:var(--muted);font-size:12px">Shot number, shot type, góc máy, mô tả, thiết bị, ghi chú</p>
+                  </div>
+                  <div class="p-3 rounded-lg" style="background:var(--card);border:1px solid var(--border)">
+                    <div style="color:var(--accent);font-weight:700;margin-bottom:4px">✓ Storyboard cơ bản</div>
+                    <p style="color:var(--muted);font-size:12px">Lưới các ô, upload ảnh, mô tả hành động, thoại</p>
+                  </div>
+                  <div class="p-3 rounded-lg" style="background:var(--card);border:1px solid var(--border)">
+                    <div style="color:var(--accent);font-weight:700;margin-bottom:4px">✓ Lưu & xuất</div>
+                    <p style="color:var(--muted);font-size:12px">Lưu localStorage, xuất JSON, in/PDF, import/export</p>
+                  </div>
+                  <div class="p-3 rounded-lg" style="background:var(--card);border:1px solid var(--border)">
+                    <div style="color:var(--accent2);font-weight:700;margin-bottom:4px">✓ Tích hợp AI</div>
+                    <p style="color:var(--muted);font-size:12px">Dùng API miễn phí (Gemini Free tier, Hugging Face) để gợi ý kịch bản</p>
+                  </div>
+                  <div class="p-3 rounded-lg" style="background:var(--card);border:1px solid var(--border)">
+                    <div style="color:var(--accent2);font-weight:700;margin-bottom:4px">✓ Đa dự án</div>
+                    <p style="color:var(--muted);font-size:12px">Chuyển đổi giữa các kịch bản, quản lý nhiều dự án</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tool-card p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border)">
+                <h3 class="font-semibold mb-3" style="color:var(--text)">Giới hạn cần biết</h3>
+                <ul class="text-sm space-y-2" style="color:var(--muted);line-height:1.7;padding-left:18px">
+                  <li><strong style="color:var(--text)">Dữ liệu chỉ trên trình duyệt:</strong> localStorage không đồng bộ giữa các thiết bị. Giải pháp: thêm tính năng Export/Import JSON.</li>
+                  <li><strong style="color:var(--text)">GitHub Pages chỉ static:</strong> Không chạy PHP/Node/Python. Nhưng JS thuần đủ mạnh cho 90% nhu cầu.</li>
+                  <li><strong style="color:var(--text)">AI image gen:</strong> Storyboard tự động cần API key (có thể dùng Gemini Free tier 15 yêu cầu/phút).</li>
+                  <li><strong style="color:var(--text)">Giới hạn dung lượng:</strong> GitHub repo 1GB, Pages 1GB băng thông/tháng - rất dư cho tool kịch bản.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: DEMO SCRIPT -->
+        <div id="tab-demo-script" class="tab-content">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Input -->
+            <div class="lg:col-span-1 space-y-4">
+              <div class="p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border)">
+                <h3 class="font-semibold mb-4" style="color:var(--text)">Thêm dòng kịch bản</h3>
+                <div class="space-y-3">
+                  <div>
+                    <label>Loại dòng</label>
+                    <select id="lineType">
+                      <option value="scene">Scene Heading</option>
+                      <option value="action">Action</option>
+                      <option value="character">Character</option>
+                      <option value="dialogue">Dialogue</option>
+                      <option value="paren">Parenthetical</option>
+                      <option value="transition">Transition</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>Nội dung</label>
+                    <textarea id="lineContent" placeholder="VD: INT. NHÀ HÀNG - NGÀY"></textarea>
+                  </div>
+                  <button class="btn-primary w-full" onclick="addScriptLine()">+ Thêm vào kịch bản</button>
+                </div>
+              </div>
+              <div class="p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border)">
+                <h3 class="font-semibold mb-3" style="color:var(--text)">Quản lý</h3>
+                <div class="space-y-2">
+                  <button class="btn-secondary w-full" onclick="exportScript()">⬇ Xuất JSON</button>
+                  <button class="btn-secondary w-full" onclick="printScript()">🖨 In / Lưu PDF</button>
+                  <button class="btn-ghost w-full" onclick="clearScript()">Xóa tất cả</button>
+                </div>
+                <p class="text-xs mt-4" style="color:var(--muted)">Dữ liệu được lưu tự động trên trình duyệt của bạn</p>
+              </div>
+            </div>
+            <!-- Script display -->
+            <div class="lg:col-span-2">
+              <div class="p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border);min-height:500px">
+                <div class="flex items-center justify-between mb-4">
+                  <h3 class="font-semibold" style="color:var(--text)">Kịch bản</h3>
+                  <span class="pill" style="background:var(--accent-soft);color:var(--text)" id="lineCount">0 dòng</span>
+                </div>
+                <div id="scriptDisplay" style="font-family:'Courier New',monospace;font-size:13px;line-height:1.6">
+                  <p style="color:var(--muted);text-align:center;padding:40px">Chưa có nội dung. Thêm dòng kịch bản từ bên trái hoặc <button class="btn-ghost" style="color:var(--accent);text-decoration:underline" onclick="loadSampleScript()">tải mẫu thử</button></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: DEMO SHOT LIST -->
+        <div id="tab-demo-shot" class="tab-content">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-1 space-y-4">
+              <div class="p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border)">
+                <h3 class="font-semibold mb-4" style="color:var(--text)">Thêm shot</h3>
+                <div class="space-y-3">
+                  <div><label>Scene #</label><input type="text" id="shotScene" placeholder="1A"></div>
+                  <div><label>Shot #</label><input type="text" id="shotNum" placeholder="1"></div>
+                  <div><label>Loại shot</label>
+                    <select id="shotType">
+                      <option value="ECU">ECU - Extreme Close Up</option>
+                      <option value="CU">CU - Close Up</option>
+                      <option value="MCU">MCU - Medium Close Up</option>
+                      <option value="MS">MS - Medium Shot</option>
+                      <option value="MLS">MLS - Medium Long Shot</option>
+                      <option value="LS">LS - Long Shot</option>
+                      <option value="ELS">ELS - Extreme Long Shot</option>
+                      <option value="OTS">OTS - Over The Shoulder</option>
+                      <option value="POV">POV</option>
+                    </select>
+                  </div>
+                  <div><label>Góc máy</label>
+                    <select id="shotAngle">
+                      <option value="Eye level">Eye level</option>
+                      <option value="Low angle">Low angle</option>
+                      <option value="High angle">High angle</option>
+                      <option value="Bird's eye">Bird's eye view</option>
+                      <option value="Dutch">Dutch angle</option>
+                    </select>
+                  </div>
+                  <div><label>Camera movement</label>
+                    <select id="shotMove">
+                      <option value="Static">Static</option>
+                      <option value="Pan">Pan</option>
+                      <option value="Tilt">Tilt</option>
+                      <option value="Dolly in">Dolly in</option>
+                      <option value="Dolly out">Dolly out</option>
+                      <option value="Tracking">Tracking</option>
+                      <option value="Handheld">Handheld</option>
+                      <option value="Crane">Crane / Jib</option>
+                    </select>
+                  </div>
+                  <div><label>Mô tả</label><textarea id="shotDesc" placeholder="Mô tả nội dung shot..."></textarea></div>
+                  <div><label>Ghi chú</label><input type="text" id="shotNote" placeholder="Thiết bị, ánh sáng..."></div>
+                  <button class="btn-primary w-full" onclick="addShot()">+ Thêm shot</button>
+                </div>
+              </div>
+              <div class="p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border)">
+                <button class="btn-secondary w-full" onclick="exportShots()">⬇ Xuất shot list</button>
+              </div>
+            </div>
+            <div class="lg:col-span-2">
+              <div class="p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border);min-height:500px;overflow-x:auto">
+                <div class="flex items-center justify-between mb-4">
+                  <h3 class="font-semibold" style="color:var(--text)">Shot List</h3>
+                  <span class="pill" style="background:var(--accent2-soft);color:var(--text)" id="shotCount">0 shots</span>
+                </div>
+                <table class="w-full text-xs" style="min-width:700px">
+                  <thead>
+                    <tr style="color:var(--muted);border-bottom:1px solid var(--border)" class="text-left">
+                      <th class="pb-2 font-medium">Scene</th>
+                      <th class="pb-2 font-medium">Shot</th>
+                      <th class="pb-2 font-medium">Type</th>
+                      <th class="pb-2 font-medium">Angle</th>
+                      <th class="pb-2 font-medium">Move</th>
+                      <th class="pb-2 font-medium">Mô tả</th>
+                      <th class="pb-2 font-medium">Ghi chú</th>
+                      <th class="pb-2 font-medium"></th>
+                    </tr>
+                  </thead>
+                  <tbody id="shotTableBody" style="color:var(--text)">
+                    <tr><td colspan="8" style="color:var(--muted);text-align:center;padding:40px">Chưa có shot nào. Thêm từ bên trái.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: DEMO STORYBOARD -->
+        <div id="tab-demo-story" class="tab-content">
+          <div class="p-5 rounded-xl mb-4" style="background:var(--card);border:1px solid var(--border)">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-semibold" style="color:var(--text)">Storyboard Grid</h3>
+              <div class="flex gap-2">
+                <button class="btn-secondary" onclick="addStoryboardPanel()">+ Thêm ô</button>
+                <button class="btn-secondary" onclick="exportStoryboard()">⬇ Xuất</button>
+              </div>
+            </div>
+            <div id="storyboardGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div class="p-4 rounded-xl text-center" style="background:var(--bg);border:2px dashed var(--border);padding:40px;color:var(--muted)">
+                Chưa có ô nào. Nhấn "+ Thêm ô" để bắt đầu tạo storyboard.
+              </div>
+            </div>
+          </div>
+          <div class="p-4 rounded-xl text-sm" style="background:var(--accent-soft);border:1px solid var(--border);color:var(--muted)">
+            <strong style="color:var(--text)">Lưu ý:</strong> Tool này cho phép upload ảnh từ máy bạn làm storyboard panel. Để AI tự động tạo hình từ mô tả, bạn cần tích hợp API của Gemini, DALL-E, hoặc Stable Diffusion (cần API key).
+          </div>
+        </div>
+
+        <!-- TAB: TEMPLATE -->
+        <div id="tab-template" class="tab-content">
+          <div class="p-5 rounded-xl" style="background:var(--card);border:1px solid var(--border)">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-semibold" style="color:var(--text)">Code template cơ bản (index.html)</h3>
+              <button class="btn-secondary" onclick="copyTemplate()">📋 Copy toàn bộ</button>
+            </div>
+            <div class="code-block" id="templateCode">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Script Tool - Công cụ viết kịch bản miễn phí&lt;/title&gt;
+  &lt;style&gt;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #1a1a1d; color: #e8e5df; padding: 20px; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    .toolbar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    button { background: #c47046; color: #1a1a1d; border: none; padding: 10px 16px; 
+             border-radius: 6px; cursor: pointer; font-weight: 600; }
+    button:hover { opacity: 0.9; }
+    .btn-sec { background: #2a2a2f; color: #e8e5df; border: 1px solid #444; }
+    #scriptEditor { width: 100%; min-height: 500px; background: #2a2a2f; 
+                    color: #e8e5df; border: 1px solid #444; border-radius: 8px;
+                    padding: 20px; font-family: 'Courier New', monospace; 
+                    font-size: 14px; line-height: 1.6; resize: vertical; }
+    .status { margin-top: 10px; color: #9a978f; font-size: 13px; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="container"&gt;
+    &lt;h1 style="margin-bottom:20px"&gt;🎬 Công cụ viết kịch bản&lt;/h1&gt;
+    &lt;div class="toolbar"&gt;
+      &lt;button onclick="saveScript()"&gt;💾 Lưu&lt;/button&gt;
+      &lt;button onclick="loadScript()"&gt;📂 Tải&lt;/button&gt;
+      &lt;button onclick="exportJSON()"&gt;⬇ Xuất JSON&lt;/button&gt;
+      &lt;button onclick="printScript()"&gt;🖨 In/PDF&lt;/button&gt;
+      &lt;button class="btn-sec" onclick="insertFormat('scene')"&gt;SCENE&lt;/button&gt;
+      &lt;button class="btn-sec" onclick="insertFormat('char')"&gt;CHAR&lt;/button&gt;
+      &lt;button class="btn-sec" onclick="insertFormat('dialog')"&gt;DIALOG&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;textarea id="scriptEditor" placeholder="Bắt đầu viết kịch bản..."&gt;&lt;/textarea&gt;
+    &lt;div class="status" id="status"&gt;Dữ liệu được lưu tự động&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;script&gt;
+    const editor = document.getElementById('scriptEditor');
+    
+    // Auto-save
+    editor.addEventListener('input', () =&gt; {
+      localStorage.setItem('myScript', editor.value);
+      updateStatus('Đã lưu tự động: ' + new Date().toLocaleTimeString());
+    });
+    
+    // Load on startup
+    window.addEventListener('load', () =&gt; {
+      const saved = localStorage.getItem('myScript');
+      if (saved) editor.value = saved;
+    });
+    
+    function saveScript() {
+      localStorage.setItem('myScript', editor.value);
+      updateStatus('Đã lưu thành công!');
+    }
+    
+    function loadScript() {
+      const saved = localStorage.getItem('myScript');
+      if (saved) { editor.value = saved; updateStatus('Đã tải kịch bản'); }
+    }
+    
+    function exportJSON() {
+      const data = { content: editor.value, date: new Date().toISOString() };
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'script_' + Date.now() + '.json';
+      a.click();
+    }
+    
+    function printScript() { window.print(); }
+    
+    function insertFormat(type) {
+      const formats = {
+        scene: '\\nINT./EXT. ĐỊA ĐIỂM - THỜI GIAN\\n',
+        char: '\\n\\t\\t\\tNHÂN VẬT\\n\\t\\t\\t(phụ chú)\\n\\tThoại...\\n',
+        dialog: '\\n\\t\\t\\t(phụ chú)\\n\\tThoại...\\n'
+      };
+      editor.value += formats[type];
+      editor.focus();
+    }
+    
+    function updateStatus(msg) { document.getElementById('status').textContent = msg; }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm" style="color:var(--muted);line-height:1.7">
+              <div class="p-4 rounded-lg" style="background:var(--bg);border:1px solid var(--border)">
+                <strong style="color:var(--text)">Các tính năng có trong template:</strong>
+                <ul class="mt-2" style="padding-left:18px">
+                  <li>Auto-save vào localStorage</li>
+                  <li>Xuất file JSON backup</li>
+                  <li>In / lưu PDF trực tiếp</li>
+                  <li>Phím tắt chèn định dạng</li>
+                  <li>Responsive trên mobile</li>
+                </ul>
+              </div>
+              <div class="p-4 rounded-lg" style="background:var(--bg);border:1px solid var(--border)">
+                <strong style="color:var(--text)">Nâng cấp có thể làm thêm:</strong>
+                <ul class="mt-2" style="padding-left:18px">
+                  <li>Tab Shot List + Storyboard</li>
+                  <li>Đa dự án (switch giữa các script)</li>
+                  <li>Tích hợp Gemini API gợi ý kịch bản</li>
+                  <li>Collaboration với Firebase</li>
+                  <li>Template theo thể loại phim ngắn</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="mt-16 pt-6" style="border-top:1px solid var(--border)">
+        <p class="text-center text-xs" style="color:var(--muted)">Dữ liệu demo được lưu trên trình duyệt của bạn (localStorage) · Xóa cache = mất dữ liệu · Hãy dùng tính năng Export để backup</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== TAB SWITCHING =====
+function switchTab(evt, tabName) {
+  var i, tabcontent, tabbuttons;
+  tabcontent = document.getElementsByClassName("tab-content");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].classList.remove("active");
+  }
+  tabbuttons = document.getElementsByClassName("tab-btn");
+  for (i = 0; i < tabbuttons.length; i++) {
+    tabbuttons[i].classList.remove("active");
+  }
+  document.getElementById("tab-" + tabName).classList.add("active");
+  evt.currentTarget.classList.add("active");
+}
+
+// ===== SCRIPT WRITER =====
+let scriptLines = JSON.parse(localStorage.getItem('demoScript') || '[]');
+
+function renderScript() {
+  const display = document.getElementById('scriptDisplay');
+  document.getElementById('lineCount').textContent = scriptLines.length + ' dòng';
+  
+  if (scriptLines.length === 0) {
+    display.innerHTML = '<p style="color:var(--muted);text-align:center;padding:40px">Chưa có nội dung. Thêm dòng kịch bản từ bên trái hoặc <button class="btn-ghost" style="color:var(--accent);text-decoration:underline" onclick="loadSampleScript()">tải mẫu thử</button></p>';
+    return;
+  }
+  
+  const styles = {
+    scene: 'font-weight:700;text-transform:uppercase;margin:16px 0 8px;color:var(--accent)',
+    action: 'margin:8px 0;color:var(--text)',
+    character: 'text-align:center;text-transform:uppercase;margin:12px 0 4px;color:var(--text);font-weight:600',
+    dialogue: 'margin:0 80px;color:var(--text)',
+    paren: 'margin:0 120px;color:var(--muted);font-style:italic',
+    transition: 'text-align:right;text-transform:uppercase;margin:12px 0;color:var(--accent2)'
+  };
+  
+  display.innerHTML = scriptLines.map((line, i) => 
+    `<div class="script-line" style="${styles[line.type] || ''};padding:4px 8px;border-radius:4px;position:relative">
+       <button class="btn-ghost" onclick="deleteScriptLine(${i})" style="position:absolute;right:4px;top:2px;opacity:0.4">✕</button>
+       ${escapeHtml(line.content)}
+     </div>`
+  ).join('');
+}
+
+function addScriptLine() {
+  const type = document.getElementById('lineType').value;
+  const content = document.getElementById('lineContent').value.trim();
+  if (!content) return;
+  scriptLines.push({ type, content });
+  saveScriptData();
+  renderScript();
+  document.getElementById('lineContent').value = '';
+}
+
+function deleteScriptLine(i) {
+  scriptLines.splice(i, 1);
+  saveScriptData();
+  renderScript();
+}
+
+function saveScriptData() {
+  localStorage.setItem('demoScript', JSON.stringify(scriptLines));
+}
+
+function loadSampleScript() {
+  scriptLines = [
+    { type: 'scene', content: 'INT. NHÀ HÀNG SANG TRỌNG - NGÀY' },
+    { type: 'action', content: 'LÂM (28t, mặc suit rẻ tiền, mặt căng thẳng) ngồi đối diện MẸ CHỒNG (50t, toàn bộ trang sức đắt giá, mặt khinh bỉ).' },
+    { type: 'character', content: 'MẸ CHỒNG' },
+    { type: 'paren', content: '(lạnh lùng)' },
+    { type: 'dialogue', content: 'Cậu nghĩ cậu xứng đáng với con gái tôi sao? Tiền bạc cậu có được không bằng một chiếc túi của tôi.' },
+    { type: 'action', content: 'Mẹ chồng ném một tấm séc 500.000 nhân dân tệ xuống bàn. Khách hàng xung quanh quay nhìn.' },
+    { type: 'character', content: 'LÂM' },
+    { type: 'paren', content: '(cười lạnh)' },
+    { type: 'dialogue', content: 'Bà nghĩ tiền có thể mua được tất cả ư?' },
+    { type: 'transition', content: 'CUT TO:' },
+    { type: 'scene', content: 'EXT. NHÀ HÀNG - LIÊN TỤC' },
+    { type: 'action', content: 'Một dãy xe sang đỗ trước cửa. TẤT CẢ GIÁM ĐỐC CÔNG TY LÂM (30t, khí chất vua chúa) bước xuống, đón Lâm ra với cung kính.' },
+    { type: 'character', content: 'TẤT CẢ GIÁM ĐỐC' },
+    { type: 'dialogue', content: 'Chào Tổng giám đốc!' },
+    { type: 'action', content: 'Mẹ chồng trong nhà há hốc mồm, không thể tin vào mắt mình.' },
+    { type: 'transition', content: 'FADE OUT.' }
+  ];
+  saveScriptData();
+  renderScript();
+}
+
+function exportScript() {
+  const data = { lines: scriptLines, exportedAt: new Date().toISOString() };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'script_' + Date.now() + '.json';
+  a.click();
+}
+
+function printScript() {
+  const styles = {
+    scene: 'font-weight:700;text-transform:uppercase;margin:16px 0 8px',
+    action: 'margin:8px 0',
+    character: 'text-align:center;text-transform:uppercase;margin:12px 0 4px;font-weight:600',
+    dialogue: 'margin:0 80px',
+    paren: 'margin:0 120px;font-style:italic;color:#666',
+    transition: 'text-align:right;text-transform:uppercase;margin:12px 0'
+  };
+  const html = scriptLines.map(l => `<div style="${styles[l.type] || ''}">${escapeHtml(l.content)}</div>`).join('');
+  const w = window.open('', '_blank');
+  w.document.write(`<html><head><title>Kịch bản</title><style>body{font-family:'Courier New',monospace;font-size:14px;line-height:1.6;padding:40px;max-width:800px;margin:0 auto}</style></head><body>${html}</body></html>`);
+  w.document.close();
+  w.print();
+}
+
+function clearScript() {
+  if (confirm('Xóa toàn bộ kịch bản?')) {
+    scriptLines = [];
+    saveScriptData();
+    renderScript();
+  }
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// ===== SHOT LIST =====
+let shots = JSON.parse(localStorage.getItem('demoShots') || '[]');
+
+function renderShots() {
+  const tbody = document.getElementById('shotTableBody');
+  document.getElementById('shotCount').textContent = shots.length + ' shots';
+  
+  if (shots.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="8" style="color:var(--muted);text-align:center;padding:40px">Chưa có shot nào</td></tr>';
+    return;
+  }
+  
+  tbody.innerHTML = shots.map((s, i) => `
+    <tr class="shot-row" style="border-bottom:1px solid var(--border)">
+      <td class="py-2 font-medium">${escapeHtml(s.scene)}</td>
+      <td class="py-2">${escapeHtml(s.num)}</td>
+      <td class="py-2"><span class="pill" style="background:var(--accent-soft);color:var(--text)">${escapeHtml(s.type)}</span></td>
+      <td class="py-2">${escapeHtml(s.angle)}</td>
+      <td class="py-2">${escapeHtml(s.move)}</td>
+      <td class="py-2" style="max-width:200px">${escapeHtml(s.desc)}</td>
+      <td class="py-2" style="color:var(--muted)">${escapeHtml(s.note)}</td>
+      <td class="py-2"><button class="btn-ghost" onclick="deleteShot(${i})" style="color:#dc2626">✕</button></td>
+    </tr>
+  `).join('');
+}
+
+function addShot() {
+  const shot = {
+    scene: document.getElementById('shotScene').value,
+    num: document.getElementById('shotNum').value,
+    type: document.getElementById('shotType').value,
+    angle: document.getElementById('shotAngle').value,
+    move: document.getElementById('shotMove').value,
+    desc: document.getElementById('shotDesc').value,
+    note: document.getElementById('shotNote').value
+  };
+  if (!shot.scene || !shot.num) { alert('Vui lòng điền Scene # và Shot #'); return; }
+  shots.push(shot);
+  localStorage.setItem('demoShots', JSON.stringify(shots));
+  renderShots();
+  ['shotScene','shotNum','shotDesc','shotNote'].forEach(id => document.getElementById(id).value = '');
+}
+
+function deleteShot(i) {
+  shots.splice(i, 1);
+  localStorage.setItem('demoShots', JSON.stringify(shots));
+  renderShots();
+}
+
+function exportShots() {
+  let csv = 'Scene,Shot,Type,Angle,Move,Description,Note\n';
+  shots.forEach(s => {
+    csv += `"${s.scene}","${s.num}","${s.type}","${s.angle}","${s.move}","${s.desc.replace(/"/g,'""')}","${s.note.replace(/"/g,'""')}"\n`;
+  });
+  const blob = new Blob(['\ufeff' + csv], {type: 'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'shotlist_' + Date.now() + '.csv';
+  a.click();
+}
+
+// ===== STORYBOARD =====
+let storyPanels = JSON.parse(localStorage.getItem('demoStoryboard') || '[]');
+let panelCounter = 0;
+
+function renderStoryboard() {
+  const grid = document.getElementById('storyboardGrid');
+  
+  if (storyPanels.length === 0) {
+    grid.innerHTML = '<div class="p-4 rounded-xl text-center" style="background:var(--bg);border:2px dashed var(--border);padding:40px;color:var(--muted)">Chưa có ô nào. Nhấn "+ Thêm ô" để bắt đầu tạo storyboard.</div>';
+    return;
+  }
+  
+  grid.innerHTML = storyPanels.map((p, i) => `
+    <div class="p-4 rounded-xl" style="background:var(--bg);border:1px solid var(--border)">
+      <div class="flex items-center justify-between mb-3">
+        <span class="pill" style="background:var(--accent2-soft);color:var(--text)">Panel ${i+1}</span>
+        <button class="btn-ghost" onclick="deletePanel(${i})" style="color:#dc2626">✕</button>
+      </div>
+      <div style="aspect-ratio:16/9;background:var(--card);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;overflow:hidden" id="panelImg_${i}">
+        ${p.image ? `<img src="${p.image}" style="width:100%;height:100%;object-fit:cover">` : `<span style="color:var(--muted);font-size:12px">Chưa có ảnh</span>`}
+      </div>
+      <input type="file" accept="image/*" onchange="uploadPanelImage(${i}, event)" style="font-size:11px;padding:4px;margin-bottom:8px">
+      <input type="text" placeholder="Shot # / Loại shot" value="${escapeHtml(p.shot || '')}" onchange="updatePanel(${i},'shot',this.value)" style="margin-bottom:6px;font-size:12px">
+      <textarea placeholder="Mô tả hành động..." onchange="updatePanel(${i},'action',this.value)" style="margin-bottom:6px;font-size:12px;min-height:50px">${escapeHtml(p.action || '')}</textarea>
+      <input type="text" placeholder="Thoại / Ghi chú..." value="${escapeHtml(p.dialogue || '')}" onchange="updatePanel(${i},'dialogue',this.value)" style="font-size:12px">
+    </div>
+  `).join('');
+}
+
+function addStoryboardPanel() {
+  storyPanels.push({ shot: '', action: '', dialogue: '', image: '' });
+  saveStoryboard();
+  renderStoryboard();
+}
+
+function deletePanel(i) {
+  storyPanels.splice(i, 1);
+  saveStoryboard();
+  renderStoryboard();
+}
+
+function updatePanel(i, field, value) {
+  storyPanels[i][field] = value;
+  saveStoryboard();
+}
+
+function uploadPanelImage(i, event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    storyPanels[i].image = e.target.result;
+    saveStoryboard();
+    renderStoryboard();
+  };
+  reader.readAsDataURL(file);
+}
+
+function saveStoryboard() {
+  localStorage.setItem('demoStoryboard', JSON.stringify(storyPanels));
+}
+
+function exportStoryboard() {
+  alert('Tính năng xuất storyboard: Dùng Ctrl+P để in thành PDF, hoặc nâng cấp code để xuất HTML/PNG');
+}
+
+// ===== TEMPLATE COPY =====
+function copyTemplate() {
+  const code = document.getElementById('templateCode').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    alert('Đã copy code template! Dán vào file index.html rồi upload lên GitHub.');
+  }).catch(() => {
+    alert('Copy không được. Hãy chọn thủ công và copy.');
+  });
+}
+
+// ===== INIT =====
+renderScript();
+renderShots();
+renderStoryboard();
+</script>
+</html>
